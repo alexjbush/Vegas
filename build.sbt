@@ -18,7 +18,7 @@ updateVegaDeps := {
   val vegaDir = target.value / ("vega-lite-" + vegaLiteVersion.value)
   IO.unzipURL(new URL("https://github.com/vega/vega-lite/archive/v" + vegaLiteVersion.value + ".zip"), target.value)
   IO.copyDirectory(vegaDir / "examples" / "specs", coreTestResources / "example-specs", true)
-  IO.copyFile(vegaDir / "vega-lite-schema.json", specResources / "vega-lite-schema.json")
+  IO.copyFile(vegaDir / "build" / "vega-lite-schema.json", specResources / "vega-lite-schema.json")
 
   // Write WebJar.csv to resources, based on ivy-deps
   val deps = (externalDependencyClasspath in vegas in Compile).value
@@ -27,7 +27,7 @@ updateVegaDeps := {
       val m = artifact.get(Keys.moduleID.key).get
       (m.organization, m.name, m.revision)
     }
-    .filter(_._1 == "org.webjars.bower")
+    .filter(_._1 == "org.webjars.npm")
     .map { case(_,n,v) => s"$n,$v" }
     .mkString("\n")
   IO.write(coreResources / "webjars.csv", webJars)
@@ -86,7 +86,7 @@ lazy val commonSettings = Seq(
   organization := "org.vegas-viz",
   crossScalaVersions := Seq("2.11.8", "2.12.4"),
   scalaVersion := "2.11.8",
-  vegaLiteVersion := "1.2.0",
+  vegaLiteVersion := "3.0.0-rc12",
   scalacOptions ++= Seq("-target:jvm-1.7", "-Ywarn-unused-import"),
   homepage := Some(url("http://vegas-viz.org")),
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/MIT")),
@@ -180,7 +180,7 @@ lazy val vegaLiteSpec = project.in(file("spec")).
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
-      "com.github.aishfenton" %% "argus" % "0.2.7",
+      "com.github.aishfenton" %% "argus" % "0.2.8-SNAPSHOT",
       "org.scalactic" %% "scalactic" % "3.0.5" % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test"
     )
@@ -208,14 +208,15 @@ lazy val vegas = project.in(file("core")).
       "org.scala-lang.modules" %% "scala-xml" % "1.0.6",
 
       // JS deps. Also used to generate "webjars.csv" file for CDN loading.
-      "org.webjars.bower" % "vega-lite" % vegaLiteVersion.value,
+      "org.webjars.npm" % "vega-lite" % vegaLiteVersion.value,
 
       // Test deps
       "com.github.aishfenton" %% "argus" % "0.2.7" % "test",
       "org.scalactic" %% "scalactic" % "3.0.5" % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test",
       "org.seleniumhq.selenium" % "selenium-java" % "3.13.0" % "test"
-    )
+    ),
+    dependencyOverrides += "org.webjars.npm" % "y18n" % "3.2.1"
   )
 
 // https://stackoverflow.com/questions/48653876/aggregate-different-modules-based-on-scala-binary-version
