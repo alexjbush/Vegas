@@ -180,6 +180,7 @@ lazy val vegaLiteSpec = project.in(file("spec")).
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
+      "io.circe" %% "circe-java8" % circeVersion,
       "com.github.aishfenton" %% "argus" % "0.2.8-SNAPSHOT",
       "org.scalactic" %% "scalactic" % "3.0.5" % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test"
@@ -196,6 +197,7 @@ lazy val vegas = project.in(file("core")).
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
+      "io.circe" %% "circe-java8" % circeVersion,
       "com.github.julien-truffaut" %% "monocle-macro" % (scalaBinaryVersion.value match {
         case "2.11" => "1.1.0"
         case "2.12" => "1.3.2"
@@ -228,7 +230,8 @@ lazy val spark = project.
   settings(
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-sql" % "[2.0,)" % "provided"
-    )
+    ),
+    dependencyOverrides += "org.webjars.npm" % "y18n" % "3.2.1"
   ).
   // remove spark dep and skip compile if version is 2.12
   settings(
@@ -247,7 +250,8 @@ lazy val flink = project.
     libraryDependencies ++= Seq(
       "org.apache.flink" %% "flink-scala" % "[1.1.1,)" % "provided",
       "org.apache.flink" %% "flink-clients" % "[1.1.1,)" % "provided"
-    )
+    ),
+    dependencyOverrides += "org.webjars.npm" % "y18n" % "3.2.1"
   ).
   settings(
     libraryDependencies := (if (scalaBinaryVersion.value == "2.12") Seq.empty

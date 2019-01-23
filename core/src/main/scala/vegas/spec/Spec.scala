@@ -15,7 +15,12 @@ object Spec {
  description: Option[String] = None,
  data: Option[Data] = None,
  transform: Option[Transform] = None,
- config: Option[Config] = None);
+ config: Option[Config] = None,
+ additionalProperties: Option[Map[String,
+ ExtendedUnitSpec.AdditionalProperties]] = None);
+  object ExtendedUnitSpec {
+    case class AdditionalProperties(x: Any)
+  };
   @enum sealed trait Mark extends scala.Product with scala.Serializable {
     def json: String
   };
@@ -65,7 +70,9 @@ object Spec {
  text: Option[FieldDef] = None,
  label: Option[FieldDef] = None,
  path: Option[Encoding.PathUnion] = None,
- order: Option[Encoding.OrderUnion] = None);
+ order: Option[Encoding.OrderUnion] = None,
+ additionalProperties: Option[Map[String,
+ Encoding.AdditionalProperties]] = None);
   object Encoding {
     @union sealed trait DetailUnion extends scala.Product with scala.Serializable;
     case class DetailFieldDef(x: FieldDef) extends DetailUnion;
@@ -75,7 +82,8 @@ object Spec {
     case class PathListOrderChannelDef(x: List[OrderChannelDef]) extends PathUnion;
     @union sealed trait OrderUnion extends scala.Product with scala.Serializable;
     case class OrderOrderChannelDef(x: OrderChannelDef) extends OrderUnion;
-    case class OrderListOrderChannelDef(x: List[OrderChannelDef]) extends OrderUnion
+    case class OrderListOrderChannelDef(x: List[OrderChannelDef]) extends OrderUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class PositionChannelDef(axis: Option[PositionChannelDef.AxisUnion] = None,
  scale: Option[Scale] = None,
@@ -86,7 +94,9 @@ object Spec {
  timeUnit: Option[TimeUnit] = None,
  bin: Option[PositionChannelDef.BinUnion] = None,
  aggregate: Option[AggregateOp] = None,
- title: Option[String] = None);
+ title: Option[String] = None,
+ additionalProperties: Option[Map[String,
+ PositionChannelDef.AdditionalProperties]] = None);
   object PositionChannelDef {
     @union sealed trait AxisUnion extends scala.Product with scala.Serializable;
     case class AxisBoolean(x: Boolean) extends AxisUnion;
@@ -100,7 +110,8 @@ object Spec {
     case class ValueBoolean(x: Boolean) extends ValueUnion;
     @union sealed trait BinUnion extends scala.Product with scala.Serializable;
     case class BinBoolean(x: Boolean) extends BinUnion;
-    case class BinBin(x: Bin) extends BinUnion
+    case class BinBin(x: Bin) extends BinUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class Axis(labelAngle: Option[Double] = None,
  format: Option[String] = None,
@@ -140,9 +151,12 @@ object Spec {
  titleOffset: Option[Double] = None,
  titleMaxLength: Option[Double] = None,
  characterWidth: Option[Double] = None,
- properties: Option[Axis.Properties] = None);
+ properties: Option[Axis.Properties] = None,
+ additionalProperties: Option[Map[String,
+ Axis.AdditionalProperties]] = None);
   object Axis {
-    case class Properties(x: Any)
+    case class Properties(x: Any);
+    case class AdditionalProperties(x: Any)
   };
   @enum sealed trait AxisOrient extends scala.Product with scala.Serializable {
     def json: String
@@ -171,7 +185,9 @@ object Spec {
  nice: Option[Scale.NiceUnion] = None,
  exponent: Option[Double] = None,
  zero: Option[Boolean] = None,
- useRawDomain: Option[Boolean] = None);
+ useRawDomain: Option[Boolean] = None,
+ additionalProperties: Option[Map[String,
+ Scale.AdditionalProperties]] = None);
   object Scale {
     @union sealed trait DomainUnion extends scala.Product with scala.Serializable;
     case class DomainListDouble(x: List[Double]) extends DomainUnion;
@@ -185,7 +201,8 @@ object Spec {
     case class BandSizeBandSize(x: BandSize) extends BandSizeUnion;
     @union sealed trait NiceUnion extends scala.Product with scala.Serializable;
     case class NiceBoolean(x: Boolean) extends NiceUnion;
-    case class NiceNiceTime(x: NiceTime) extends NiceUnion
+    case class NiceNiceTime(x: NiceTime) extends NiceUnion;
+    case class AdditionalProperties(x: Any)
   };
   @enum sealed trait ScaleType extends scala.Product with scala.Serializable {
     def json: String
@@ -255,7 +272,12 @@ object Spec {
   };
   case class SortField(field: String,
  op: AggregateOp,
- order: Option[SortOrder] = None);
+ order: Option[SortOrder] = None,
+ additionalProperties: Option[Map[String,
+ SortField.AdditionalProperties]] = None);
+  object SortField {
+    case class AdditionalProperties(x: Any)
+  };
   @enum sealed trait AggregateOp extends scala.Product with scala.Serializable {
     def json: String
   };
@@ -427,14 +449,21 @@ object Spec {
  steps: Option[List[Double]] = None,
  minstep: Option[Double] = None,
  div: Option[List[Double]] = None,
- maxbins: Option[Double] = None);
+ maxbins: Option[Double] = None,
+ additionalProperties: Option[Map[String,
+ Bin.AdditionalProperties]] = None);
+  object Bin {
+    case class AdditionalProperties(x: Any)
+  };
   case class FieldDef(field: Option[String] = None,
  `type`: Option[Type] = None,
  value: Option[FieldDef.ValueUnion] = None,
  timeUnit: Option[TimeUnit] = None,
  bin: Option[FieldDef.BinUnion] = None,
  aggregate: Option[AggregateOp] = None,
- title: Option[String] = None);
+ title: Option[String] = None,
+ additionalProperties: Option[Map[String,
+ FieldDef.AdditionalProperties]] = None);
   object FieldDef {
     @union sealed trait ValueUnion extends scala.Product with scala.Serializable;
     case class ValueDouble(x: Double) extends ValueUnion;
@@ -442,7 +471,8 @@ object Spec {
     case class ValueBoolean(x: Boolean) extends ValueUnion;
     @union sealed trait BinUnion extends scala.Product with scala.Serializable;
     case class BinBoolean(x: Boolean) extends BinUnion;
-    case class BinBin(x: Bin) extends BinUnion
+    case class BinBin(x: Bin) extends BinUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class ChannelDefWithLegend(legend: Option[Legend] = None,
  scale: Option[Scale] = None,
@@ -453,7 +483,9 @@ object Spec {
  timeUnit: Option[TimeUnit] = None,
  bin: Option[ChannelDefWithLegend.BinUnion] = None,
  aggregate: Option[AggregateOp] = None,
- title: Option[String] = None);
+ title: Option[String] = None,
+ additionalProperties: Option[Map[String,
+ ChannelDefWithLegend.AdditionalProperties]] = None);
   object ChannelDefWithLegend {
     @union sealed trait SortUnion extends scala.Product with scala.Serializable;
     case class SortSortField(x: SortField) extends SortUnion;
@@ -464,7 +496,8 @@ object Spec {
     case class ValueBoolean(x: Boolean) extends ValueUnion;
     @union sealed trait BinUnion extends scala.Product with scala.Serializable;
     case class BinBoolean(x: Boolean) extends BinUnion;
-    case class BinBin(x: Bin) extends BinUnion
+    case class BinBin(x: Bin) extends BinUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class Legend(format: Option[String] = None,
  title: Option[String] = None,
@@ -492,10 +525,13 @@ object Spec {
  titleFont: Option[String] = None,
  titleFontSize: Option[Double] = None,
  titleFontWeight: Option[String] = None,
- properties: Option[Legend.Properties] = None);
+ properties: Option[Legend.Properties] = None,
+ additionalProperties: Option[Map[String,
+ Legend.AdditionalProperties]] = None);
   object Legend {
     case class Values(x: Any);
-    case class Properties(x: Any)
+    case class Properties(x: Any);
+    case class AdditionalProperties(x: Any)
   };
   case class OrderChannelDef(sort: Option[SortOrder] = None,
  field: Option[String] = None,
@@ -504,7 +540,9 @@ object Spec {
  timeUnit: Option[TimeUnit] = None,
  bin: Option[OrderChannelDef.BinUnion] = None,
  aggregate: Option[AggregateOp] = None,
- title: Option[String] = None);
+ title: Option[String] = None,
+ additionalProperties: Option[Map[String,
+ OrderChannelDef.AdditionalProperties]] = None);
   object OrderChannelDef {
     @union sealed trait ValueUnion extends scala.Product with scala.Serializable;
     case class ValueDouble(x: Double) extends ValueUnion;
@@ -512,18 +550,27 @@ object Spec {
     case class ValueBoolean(x: Boolean) extends ValueUnion;
     @union sealed trait BinUnion extends scala.Product with scala.Serializable;
     case class BinBoolean(x: Boolean) extends BinUnion;
-    case class BinBin(x: Bin) extends BinUnion
+    case class BinBin(x: Bin) extends BinUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class Data(format: Option[DataFormat] = None,
  url: Option[String] = None,
- values: Option[List[Data.Values]] = None);
+ values: Option[List[Data.Values]] = None,
+ additionalProperties: Option[Map[String,
+ Data.AdditionalProperties]] = None);
   object Data {
-    case class Values(x: Any)
+    case class Values(x: Any);
+    case class AdditionalProperties(x: Any)
   };
   case class DataFormat(`type`: Option[DataFormatType] = None,
  property: Option[String] = None,
  feature: Option[String] = None,
- mesh: Option[String] = None);
+ mesh: Option[String] = None,
+ additionalProperties: Option[Map[String,
+ DataFormat.AdditionalProperties]] = None);
+  object DataFormat {
+    case class AdditionalProperties(x: Any)
+  };
   @enum sealed trait DataFormatType extends scala.Product with scala.Serializable {
     def json: String
   };
@@ -543,7 +590,9 @@ object Spec {
   };
   case class Transform(filter: Option[Transform.FilterUnion] = None,
  filterInvalid: Option[Boolean] = None,
- calculate: Option[List[Formula]] = None);
+ calculate: Option[List[Formula]] = None,
+ additionalProperties: Option[Map[String,
+ Transform.AdditionalProperties]] = None);
   object Transform {
     @union sealed trait FilterUnion extends scala.Product with scala.Serializable;
     case class FilterString(x: String) extends FilterUnion;
@@ -555,17 +604,21 @@ object Spec {
     case class Filter5String(x: String) extends Filter5Union;
     case class Filter5EqualFilter(x: EqualFilter) extends Filter5Union;
     case class Filter5RangeFilter(x: RangeFilter) extends Filter5Union;
-    case class Filter5OneOfFilter(x: OneOfFilter) extends Filter5Union
+    case class Filter5OneOfFilter(x: OneOfFilter) extends Filter5Union;
+    case class AdditionalProperties(x: Any)
   };
   case class EqualFilter(timeUnit: Option[TimeUnit] = None,
  field: String,
- equal: EqualFilter.EqualUnion);
+ equal: EqualFilter.EqualUnion,
+ additionalProperties: Option[Map[String,
+ EqualFilter.AdditionalProperties]] = None);
   object EqualFilter {
     @union sealed trait EqualUnion extends scala.Product with scala.Serializable;
     case class EqualString(x: String) extends EqualUnion;
     case class EqualDouble(x: Double) extends EqualUnion;
     case class EqualBoolean(x: Boolean) extends EqualUnion;
-    case class EqualDateTime(x: DateTime) extends EqualUnion
+    case class EqualDateTime(x: DateTime) extends EqualUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class DateTime(year: Option[Double] = None,
  quarter: Option[Double] = None,
@@ -575,35 +628,49 @@ object Spec {
  hours: Option[Double] = None,
  minutes: Option[Double] = None,
  seconds: Option[Double] = None,
- milliseconds: Option[Double] = None);
+ milliseconds: Option[Double] = None,
+ additionalProperties: Option[Map[String,
+ DateTime.AdditionalProperties]] = None);
   object DateTime {
     @union sealed trait MonthUnion extends scala.Product with scala.Serializable;
     case class MonthDouble(x: Double) extends MonthUnion;
     case class MonthString(x: String) extends MonthUnion;
     @union sealed trait DayUnion extends scala.Product with scala.Serializable;
     case class DayDouble(x: Double) extends DayUnion;
-    case class DayString(x: String) extends DayUnion
+    case class DayString(x: String) extends DayUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class RangeFilter(timeUnit: Option[TimeUnit] = None,
  field: String,
- range: List[RangeFilter.RangeUnion]);
+ range: List[RangeFilter.RangeUnion],
+ additionalProperties: Option[Map[String,
+ RangeFilter.AdditionalProperties]] = None);
   object RangeFilter {
     @union sealed trait RangeUnion extends scala.Product with scala.Serializable;
     case class RangeDouble(x: Double) extends RangeUnion;
-    case class RangeDateTime(x: DateTime) extends RangeUnion
+    case class RangeDateTime(x: DateTime) extends RangeUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class OneOfFilter(timeUnit: Option[TimeUnit] = None,
  field: String,
- oneOf: List[OneOfFilter.OneOfUnion]);
+ oneOf: List[OneOfFilter.OneOfUnion],
+ additionalProperties: Option[Map[String,
+ OneOfFilter.AdditionalProperties]] = None);
   object OneOfFilter {
     @union sealed trait OneOfUnion extends scala.Product with scala.Serializable;
     case class OneOfString(x: String) extends OneOfUnion;
     case class OneOfDouble(x: Double) extends OneOfUnion;
     case class OneOfBoolean(x: Boolean) extends OneOfUnion;
-    case class OneOfDateTime(x: DateTime) extends OneOfUnion
+    case class OneOfDateTime(x: DateTime) extends OneOfUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class Formula(field: String,
- expr: String);
+ expr: String,
+ additionalProperties: Option[Map[String,
+ Formula.AdditionalProperties]] = None);
+  object Formula {
+    case class AdditionalProperties(x: Any)
+  };
   case class Config(viewport: Option[Double] = None,
  background: Option[String] = None,
  numberFormat: Option[String] = None,
@@ -615,7 +682,12 @@ object Spec {
  scale: Option[ScaleConfig] = None,
  axis: Option[AxisConfig] = None,
  legend: Option[LegendConfig] = None,
- facet: Option[FacetConfig] = None);
+ facet: Option[FacetConfig] = None,
+ additionalProperties: Option[Map[String,
+ Config.AdditionalProperties]] = None);
+  object Config {
+    case class AdditionalProperties(x: Any)
+  };
   case class CellConfig(width: Option[Double] = None,
  height: Option[Double] = None,
  clip: Option[Boolean] = None,
@@ -625,7 +697,12 @@ object Spec {
  strokeOpacity: Option[Double] = None,
  strokeWidth: Option[Double] = None,
  strokeDash: Option[List[Double]] = None,
- strokeDashOffset: Option[Double] = None);
+ strokeDashOffset: Option[Double] = None,
+ additionalProperties: Option[Map[String,
+ CellConfig.AdditionalProperties]] = None);
+  object CellConfig {
+    case class AdditionalProperties(x: Any)
+  };
   case class MarkConfig(filled: Option[Boolean] = None,
  color: Option[String] = None,
  fill: Option[String] = None,
@@ -662,11 +739,14 @@ object Spec {
  format: Option[String] = None,
  shortTimeLabels: Option[Boolean] = None,
  text: Option[String] = None,
- applyColorToBackground: Option[Boolean] = None);
+ applyColorToBackground: Option[Boolean] = None,
+ additionalProperties: Option[Map[String,
+ MarkConfig.AdditionalProperties]] = None);
   object MarkConfig {
     @union sealed trait ShapeUnion extends scala.Product with scala.Serializable;
     case class ShapeShape(x: Shape) extends ShapeUnion;
-    case class ShapeString(x: String) extends ShapeUnion
+    case class ShapeString(x: String) extends ShapeUnion;
+    case class AdditionalProperties(x: Any)
   };
   @enum sealed trait StackOffset extends scala.Product with scala.Serializable {
     def json: String
@@ -816,7 +896,12 @@ object Spec {
   case class OverlayConfig(line: Option[Boolean] = None,
  area: Option[AreaOverlay] = None,
  pointStyle: Option[MarkConfig] = None,
- lineStyle: Option[MarkConfig] = None);
+ lineStyle: Option[MarkConfig] = None,
+ additionalProperties: Option[Map[String,
+ OverlayConfig.AdditionalProperties]] = None);
+  object OverlayConfig {
+    case class AdditionalProperties(x: Any)
+  };
   @enum sealed trait AreaOverlay extends scala.Product with scala.Serializable {
     def json: String
   };
@@ -844,7 +929,9 @@ object Spec {
  fontSizeRange: Option[List[Double]] = None,
  ruleSizeRange: Option[List[Double]] = None,
  tickSizeRange: Option[List[Double]] = None,
- pointSizeRange: Option[List[Double]] = None);
+ pointSizeRange: Option[List[Double]] = None,
+ additionalProperties: Option[Map[String,
+ ScaleConfig.AdditionalProperties]] = None);
   object ScaleConfig {
     @union sealed trait BandSizeUnion extends scala.Product with scala.Serializable;
     case class BandSizeDouble(x: Double) extends BandSizeUnion;
@@ -857,7 +944,8 @@ object Spec {
     case class SequentialColorRangeListString(x: List[String]) extends SequentialColorRangeUnion;
     @union sealed trait ShapeRangeUnion extends scala.Product with scala.Serializable;
     case class ShapeRangeString(x: String) extends ShapeRangeUnion;
-    case class ShapeRangeListString(x: List[String]) extends ShapeRangeUnion
+    case class ShapeRangeListString(x: List[String]) extends ShapeRangeUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class AxisConfig(axisWidth: Option[Double] = None,
  layer: Option[String] = None,
@@ -893,9 +981,12 @@ object Spec {
  titleOffset: Option[Double] = None,
  titleMaxLength: Option[Double] = None,
  characterWidth: Option[Double] = None,
- properties: Option[AxisConfig.Properties] = None);
+ properties: Option[AxisConfig.Properties] = None,
+ additionalProperties: Option[Map[String,
+ AxisConfig.AdditionalProperties]] = None);
   object AxisConfig {
-    case class Properties(x: Any)
+    case class Properties(x: Any);
+    case class AdditionalProperties(x: Any)
   };
   case class LegendConfig(orient: Option[String] = None,
  offset: Option[Double] = None,
@@ -920,33 +1011,59 @@ object Spec {
  titleFont: Option[String] = None,
  titleFontSize: Option[Double] = None,
  titleFontWeight: Option[String] = None,
- properties: Option[LegendConfig.Properties] = None);
+ properties: Option[LegendConfig.Properties] = None,
+ additionalProperties: Option[Map[String,
+ LegendConfig.AdditionalProperties]] = None);
   object LegendConfig {
-    case class Properties(x: Any)
+    case class Properties(x: Any);
+    case class AdditionalProperties(x: Any)
   };
   case class FacetConfig(scale: Option[FacetScaleConfig] = None,
  axis: Option[AxisConfig] = None,
  grid: Option[FacetGridConfig] = None,
- cell: Option[CellConfig] = None);
+ cell: Option[CellConfig] = None,
+ additionalProperties: Option[Map[String,
+ FacetConfig.AdditionalProperties]] = None);
+  object FacetConfig {
+    case class AdditionalProperties(x: Any)
+  };
   case class FacetScaleConfig(round: Option[Boolean] = None,
- padding: Option[Double] = None);
+ padding: Option[Double] = None,
+ additionalProperties: Option[Map[String,
+ FacetScaleConfig.AdditionalProperties]] = None);
+  object FacetScaleConfig {
+    case class AdditionalProperties(x: Any)
+  };
   case class FacetGridConfig(color: Option[String] = None,
  opacity: Option[Double] = None,
- offset: Option[Double] = None);
+ offset: Option[Double] = None,
+ additionalProperties: Option[Map[String,
+ FacetGridConfig.AdditionalProperties]] = None);
+  object FacetGridConfig {
+    case class AdditionalProperties(x: Any)
+  };
   case class FacetSpec(facet: Facet,
  spec: FacetSpec.SpecUnion,
  name: Option[String] = None,
  description: Option[String] = None,
  data: Option[Data] = None,
  transform: Option[Transform] = None,
- config: Option[Config] = None);
+ config: Option[Config] = None,
+ additionalProperties: Option[Map[String,
+ FacetSpec.AdditionalProperties]] = None);
   object FacetSpec {
     @union sealed trait SpecUnion extends scala.Product with scala.Serializable;
     case class SpecLayerSpec(x: LayerSpec) extends SpecUnion;
-    case class SpecUnitSpec(x: UnitSpec) extends SpecUnion
+    case class SpecUnitSpec(x: UnitSpec) extends SpecUnion;
+    case class AdditionalProperties(x: Any)
   };
   case class Facet(row: Option[PositionChannelDef] = None,
- column: Option[PositionChannelDef] = None);
+ column: Option[PositionChannelDef] = None,
+ additionalProperties: Option[Map[String,
+ Facet.AdditionalProperties]] = None);
+  object Facet {
+    case class AdditionalProperties(x: Any)
+  };
   case class LayerSpec(width: Option[Double] = None,
  height: Option[Double] = None,
  layers: List[UnitSpec],
@@ -954,7 +1071,12 @@ object Spec {
  description: Option[String] = None,
  data: Option[Data] = None,
  transform: Option[Transform] = None,
- config: Option[Config] = None);
+ config: Option[Config] = None,
+ additionalProperties: Option[Map[String,
+ LayerSpec.AdditionalProperties]] = None);
+  object LayerSpec {
+    case class AdditionalProperties(x: Any)
+  };
   case class UnitSpec(width: Option[Double] = None,
  height: Option[Double] = None,
  mark: Mark,
@@ -963,7 +1085,12 @@ object Spec {
  description: Option[String] = None,
  data: Option[Data] = None,
  transform: Option[Transform] = None,
- config: Option[Config] = None);
+ config: Option[Config] = None,
+ additionalProperties: Option[Map[String,
+ UnitSpec.AdditionalProperties]] = None);
+  object UnitSpec {
+    case class AdditionalProperties(x: Any)
+  };
   case class UnitEncoding(x: Option[PositionChannelDef] = None,
  y: Option[PositionChannelDef] = None,
  x2: Option[FieldDef] = None,
@@ -976,7 +1103,9 @@ object Spec {
  text: Option[FieldDef] = None,
  label: Option[FieldDef] = None,
  path: Option[UnitEncoding.PathUnion] = None,
- order: Option[UnitEncoding.OrderUnion] = None);
+ order: Option[UnitEncoding.OrderUnion] = None,
+ additionalProperties: Option[Map[String,
+ UnitEncoding.AdditionalProperties]] = None);
   object UnitEncoding {
     @union sealed trait DetailUnion extends scala.Product with scala.Serializable;
     case class DetailFieldDef(x: FieldDef) extends DetailUnion;
@@ -986,7 +1115,8 @@ object Spec {
     case class PathListOrderChannelDef(x: List[OrderChannelDef]) extends PathUnion;
     @union sealed trait OrderUnion extends scala.Product with scala.Serializable;
     case class OrderOrderChannelDef(x: OrderChannelDef) extends OrderUnion;
-    case class OrderListOrderChannelDef(x: List[OrderChannelDef]) extends OrderUnion
+    case class OrderListOrderChannelDef(x: List[OrderChannelDef]) extends OrderUnion;
+    case class AdditionalProperties(x: Any)
   };
   @union sealed trait VegaUnion extends scala.Product with scala.Serializable;
   case class VegaExtendedUnitSpec(x: ExtendedUnitSpec) extends VegaUnion;
@@ -996,6 +1126,7 @@ object Spec {
     import cats.syntax.either._;
     import io.circe._;
     import io.circe.syntax._;
+    import io.circe.java8.time._;
     def anyEncoder: Encoder[Any] = Encoder.instance(((a: Any) => a match {
       case null => Json.Null
       case (b @ ((_): Boolean)) => b.asJson
@@ -1006,6 +1137,7 @@ object Spec {
       case (f @ ((_): Float)) => f.asJson
       case (d @ ((_): Double)) => d.asJson
       case (s @ ((_): String)) => s.asJson
+      case (u @ ((_): java.util.UUID)) => u.asJson
       case (a @ ((_): Array[Boolean] @unchecked)) => a.asJson
       case (a @ ((_): Array[Byte] @unchecked)) => a.asJson
       case (a @ ((_): Array[Short] @unchecked)) => a.asJson
@@ -1013,13 +1145,12 @@ object Spec {
       case (a @ ((_): Array[Long] @unchecked)) => a.asJson
       case (a @ ((_): Array[Float] @unchecked)) => a.asJson
       case (a @ ((_): Array[Double] @unchecked)) => a.asJson
-      case (s @ ((_): Array[Any] @unchecked)) => s.asJson(Encoder.encodeTraversableOnce(anyEncoder,
- implicitly))
-      case (s @ ((_): Seq[Any] @unchecked)) => s.asJson(Encoder.encodeTraversableOnce(anyEncoder,
- implicitly))
+      case (s @ ((_): Array[Any] @unchecked)) => s.toList.asJson(Encoder.encodeList(anyEncoder))
+      case (s @ ((_): Seq[Any] @unchecked)) => s.asJson(Encoder.encodeSeq(anyEncoder))
       case (ma @ ((_): Map[String,
  Any] @unchecked)) => ma.asJson(Encoder.encodeMapLike(KeyEncoder.encodeKeyString,
- anyEncoder))
+ anyEncoder,
+ ((x$1) => x$1.toSeq)))
     }));
     def anyDecoder: Decoder[Any] = Decoder.instance(((h: HCursor) => h.focus.get match {
       case (n @ _) if n.isNull => null
@@ -1030,7 +1161,7 @@ object Spec {
  Any]](Decoder.decodeMapLike(KeyDecoder.decodeKeyString,
  anyDecoder,
  Map.canBuildFrom))
-      case (a @ _) if a.isArray => a.as[List[Any]](Decoder.decodeCanBuildFrom(anyDecoder,
+      case (a @ _) if a.isArray => a.as[List[Any]](Decoder.decodeTraversable(anyDecoder,
  List.canBuildFrom[Any]))
     }));
     implicit val SpecExtendedUnitSpecEncoder: Encoder[Spec.ExtendedUnitSpec] = Encoder.instance(((cc: Spec.ExtendedUnitSpec) => Json.obj("width".->(cc.width.asJson),
@@ -1041,7 +1172,8 @@ object Spec {
  "description".->(cc.description.asJson),
  "data".->(cc.data.asJson),
  "transform".->(cc.transform.asJson),
- "config".->(cc.config.asJson))));
+ "config".->(cc.config.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecExtendedUnitSpecDecoder: Decoder[Spec.ExtendedUnitSpec] = Decoder.instance(((c: HCursor) => c.downField("width").as[Option[Double]]
 .flatMap(((width) => c.downField("height").as[Option[Double]]
 .flatMap(((height) => c.downField("mark").as[Mark]
@@ -1050,7 +1182,9 @@ object Spec {
 .flatMap(((name) => c.downField("description").as[Option[String]]
 .flatMap(((description) => c.downField("data").as[Option[Data]]
 .flatMap(((data) => c.downField("transform").as[Option[Transform]]
-.flatMap(((transform) => c.downField("config").as[Option[Config]].map(((config) => Spec.ExtendedUnitSpec(width,
+.flatMap(((transform) => c.downField("config").as[Option[Config]]
+.flatMap(((config) => c.downField("additionalProperties").as[Option[Map[String,
+ ExtendedUnitSpec.AdditionalProperties]]].map(((additionalProperties) => Spec.ExtendedUnitSpec(width,
  height,
  mark,
  encoding,
@@ -1058,7 +1192,10 @@ object Spec {
  description,
  data,
  transform,
- config)))))))))))))))))))));
+ config,
+ additionalProperties)))))))))))))))))))))));
+    implicit val SpecExtendedUnitSpecAdditionalPropertiesEncoder: Encoder[Spec.ExtendedUnitSpec.AdditionalProperties] = Encoder.instance(((wrapper: Spec.ExtendedUnitSpec.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecExtendedUnitSpecAdditionalPropertiesDecoder: Decoder[Spec.ExtendedUnitSpec.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$2) => Spec.ExtendedUnitSpec.AdditionalProperties(x$2)))));
     implicit val SpecMarkEncoder: Encoder[Spec.Mark] = Encoder.instance(((e: Spec.Mark) => parser.parse(e.json).toOption.get));
     implicit val SpecMarkDecoder: Decoder[Spec.Mark] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -1089,7 +1226,8 @@ object Spec {
  "text".->(cc.text.asJson),
  "label".->(cc.label.asJson),
  "path".->(cc.path.asJson),
- "order".->(cc.order.asJson))));
+ "order".->(cc.order.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecEncodingDecoder: Decoder[Spec.Encoding] = Decoder.instance(((c: HCursor) => c.downField("row").as[Option[PositionChannelDef]]
 .flatMap(((row) => c.downField("column").as[Option[PositionChannelDef]]
 .flatMap(((column) => c.downField("x").as[Option[PositionChannelDef]]
@@ -1104,7 +1242,9 @@ object Spec {
 .flatMap(((detail) => c.downField("text").as[Option[FieldDef]]
 .flatMap(((text) => c.downField("label").as[Option[FieldDef]]
 .flatMap(((label) => c.downField("path").as[Option[Encoding.PathUnion]]
-.flatMap(((path) => c.downField("order").as[Option[Encoding.OrderUnion]].map(((order) => Spec.Encoding(row,
+.flatMap(((path) => c.downField("order").as[Option[Encoding.OrderUnion]]
+.flatMap(((order) => c.downField("additionalProperties").as[Option[Map[String,
+ Encoding.AdditionalProperties]]].map(((additionalProperties) => Spec.Encoding(row,
  column,
  x,
  y,
@@ -1118,7 +1258,8 @@ object Spec {
  text,
  label,
  path,
- order)))))))))))))))))))))))))))))))));
+ order,
+ additionalProperties)))))))))))))))))))))))))))))))))));
     implicit val SpecEncodingDetailUnionEncoder: Encoder[Spec.Encoding.DetailUnion] = Encoder.instance({
       case (ut @ ((_): Spec.Encoding.DetailFieldDef)) => ut.x.asJson
       case (ut @ ((_): Spec.Encoding.DetailListFieldDef)) => ut.x.asJson
@@ -1134,6 +1275,8 @@ object Spec {
       case (ut @ ((_): Spec.Encoding.OrderListOrderChannelDef)) => ut.x.asJson
     });
     implicit val SpecEncodingOrderUnionDecoder: Decoder[Spec.Encoding.OrderUnion] = Decoder.instance(((c: HCursor) => c.as[OrderChannelDef].map(((x) => Spec.Encoding.OrderOrderChannelDef(x))).orElse(c.as[List[OrderChannelDef]].map(((x) => Spec.Encoding.OrderListOrderChannelDef(x))))));
+    implicit val SpecEncodingAdditionalPropertiesEncoder: Encoder[Spec.Encoding.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Encoding.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecEncodingAdditionalPropertiesDecoder: Decoder[Spec.Encoding.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$3) => Spec.Encoding.AdditionalProperties(x$3)))));
     implicit val SpecPositionChannelDefEncoder: Encoder[Spec.PositionChannelDef] = Encoder.instance(((cc: Spec.PositionChannelDef) => Json.obj("axis".->(cc.axis.asJson),
  "scale".->(cc.scale.asJson),
  "sort".->(cc.sort.asJson),
@@ -1143,7 +1286,8 @@ object Spec {
  "timeUnit".->(cc.timeUnit.asJson),
  "bin".->(cc.bin.asJson),
  "aggregate".->(cc.aggregate.asJson),
- "title".->(cc.title.asJson))));
+ "title".->(cc.title.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecPositionChannelDefDecoder: Decoder[Spec.PositionChannelDef] = Decoder.instance(((c: HCursor) => c.downField("axis").as[Option[PositionChannelDef.AxisUnion]]
 .flatMap(((axis) => c.downField("scale").as[Option[Scale]]
 .flatMap(((scale) => c.downField("sort").as[Option[PositionChannelDef.SortUnion]]
@@ -1153,7 +1297,9 @@ object Spec {
 .flatMap(((value) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("bin").as[Option[PositionChannelDef.BinUnion]]
 .flatMap(((bin) => c.downField("aggregate").as[Option[AggregateOp]]
-.flatMap(((aggregate) => c.downField("title").as[Option[String]].map(((title) => Spec.PositionChannelDef(axis,
+.flatMap(((aggregate) => c.downField("title").as[Option[String]]
+.flatMap(((title) => c.downField("additionalProperties").as[Option[Map[String,
+ PositionChannelDef.AdditionalProperties]]].map(((additionalProperties) => Spec.PositionChannelDef(axis,
  scale,
  sort,
  field,
@@ -1162,7 +1308,8 @@ object Spec {
  timeUnit,
  bin,
  aggregate,
- title)))))))))))))))))))))));
+ title,
+ additionalProperties)))))))))))))))))))))))));
     implicit val SpecPositionChannelDefAxisUnionEncoder: Encoder[Spec.PositionChannelDef.AxisUnion] = Encoder.instance({
       case (ut @ ((_): Spec.PositionChannelDef.AxisBoolean)) => ut.x.asJson
       case (ut @ ((_): Spec.PositionChannelDef.AxisAxis)) => ut.x.asJson
@@ -1184,6 +1331,8 @@ object Spec {
       case (ut @ ((_): Spec.PositionChannelDef.BinBin)) => ut.x.asJson
     });
     implicit val SpecPositionChannelDefBinUnionDecoder: Decoder[Spec.PositionChannelDef.BinUnion] = Decoder.instance(((c: HCursor) => c.as[Boolean].map(((x) => Spec.PositionChannelDef.BinBoolean(x))).orElse(c.as[Bin].map(((x) => Spec.PositionChannelDef.BinBin(x))))));
+    implicit val SpecPositionChannelDefAdditionalPropertiesEncoder: Encoder[Spec.PositionChannelDef.AdditionalProperties] = Encoder.instance(((wrapper: Spec.PositionChannelDef.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecPositionChannelDefAdditionalPropertiesDecoder: Decoder[Spec.PositionChannelDef.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$4) => Spec.PositionChannelDef.AdditionalProperties(x$4)))));
     implicit val SpecAxisEncoder: Encoder[Spec.Axis] = Encoder.instance(((cc: Spec.Axis) => Json.obj("labelAngle".->(cc.labelAngle.asJson),
  "format".->(cc.format.asJson),
  "orient".->(cc.orient.asJson),
@@ -1222,7 +1371,8 @@ object Spec {
  "titleOffset".->(cc.titleOffset.asJson),
  "titleMaxLength".->(cc.titleMaxLength.asJson),
  "characterWidth".->(cc.characterWidth.asJson),
- "properties".->(cc.properties.asJson))));
+ "properties".->(cc.properties.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecAxisDecoder: Decoder[Spec.Axis] = Decoder.instance(((c: HCursor) => c.downField("labelAngle").as[Option[Double]]
 .flatMap(((labelAngle) => c.downField("format").as[Option[String]]
 .flatMap(((format) => c.downField("orient").as[Option[AxisOrient]]
@@ -1261,7 +1411,9 @@ object Spec {
 .flatMap(((titleFontWeight) => c.downField("titleOffset").as[Option[Double]]
 .flatMap(((titleOffset) => c.downField("titleMaxLength").as[Option[Double]]
 .flatMap(((titleMaxLength) => c.downField("characterWidth").as[Option[Double]]
-.flatMap(((characterWidth) => c.downField("properties").as[Option[Axis.Properties]].map(((properties) => Spec.Axis(labelAngle,
+.flatMap(((characterWidth) => c.downField("properties").as[Option[Axis.Properties]]
+.flatMap(((properties) => c.downField("additionalProperties").as[Option[Map[String,
+ Axis.AdditionalProperties]]].map(((additionalProperties) => Spec.Axis(labelAngle,
  format,
  orient,
  title,
@@ -1299,9 +1451,12 @@ object Spec {
  titleOffset,
  titleMaxLength,
  characterWidth,
- properties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+ properties,
+ additionalProperties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
     implicit val SpecAxisPropertiesEncoder: Encoder[Spec.Axis.Properties] = Encoder.instance(((wrapper: Spec.Axis.Properties) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecAxisPropertiesDecoder: Decoder[Spec.Axis.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$1) => Spec.Axis.Properties(x$1)))));
+    implicit val SpecAxisPropertiesDecoder: Decoder[Spec.Axis.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$5) => Spec.Axis.Properties(x$5)))));
+    implicit val SpecAxisAdditionalPropertiesEncoder: Encoder[Spec.Axis.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Axis.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecAxisAdditionalPropertiesDecoder: Decoder[Spec.Axis.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$6) => Spec.Axis.AdditionalProperties(x$6)))));
     implicit val SpecAxisOrientEncoder: Encoder[Spec.AxisOrient] = Encoder.instance(((e: Spec.AxisOrient) => parser.parse(e.json).toOption.get));
     implicit val SpecAxisOrientDecoder: Decoder[Spec.AxisOrient] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -1322,7 +1477,8 @@ object Spec {
  "nice".->(cc.nice.asJson),
  "exponent".->(cc.exponent.asJson),
  "zero".->(cc.zero.asJson),
- "useRawDomain".->(cc.useRawDomain.asJson))));
+ "useRawDomain".->(cc.useRawDomain.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecScaleDecoder: Decoder[Spec.Scale] = Decoder.instance(((c: HCursor) => c.downField("type").as[Option[ScaleType]]
 .flatMap(((`type`) => c.downField("domain").as[Option[Scale.DomainUnion]]
 .flatMap(((domain) => c.downField("range").as[Option[Scale.RangeUnion]]
@@ -1333,7 +1489,9 @@ object Spec {
 .flatMap(((clamp) => c.downField("nice").as[Option[Scale.NiceUnion]]
 .flatMap(((nice) => c.downField("exponent").as[Option[Double]]
 .flatMap(((exponent) => c.downField("zero").as[Option[Boolean]]
-.flatMap(((zero) => c.downField("useRawDomain").as[Option[Boolean]].map(((useRawDomain) => Spec.Scale(`type`,
+.flatMap(((zero) => c.downField("useRawDomain").as[Option[Boolean]]
+.flatMap(((useRawDomain) => c.downField("additionalProperties").as[Option[Map[String,
+ Scale.AdditionalProperties]]].map(((additionalProperties) => Spec.Scale(`type`,
  domain,
  range,
  round,
@@ -1343,7 +1501,8 @@ object Spec {
  nice,
  exponent,
  zero,
- useRawDomain)))))))))))))))))))))))));
+ useRawDomain,
+ additionalProperties)))))))))))))))))))))))))));
     implicit val SpecScaleDomainUnionEncoder: Encoder[Spec.Scale.DomainUnion] = Encoder.instance({
       case (ut @ ((_): Spec.Scale.DomainListDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.Scale.DomainListString)) => ut.x.asJson
@@ -1365,6 +1524,8 @@ object Spec {
       case (ut @ ((_): Spec.Scale.NiceNiceTime)) => ut.x.asJson
     });
     implicit val SpecScaleNiceUnionDecoder: Decoder[Spec.Scale.NiceUnion] = Decoder.instance(((c: HCursor) => c.as[Boolean].map(((x) => Spec.Scale.NiceBoolean(x))).orElse(c.as[NiceTime].map(((x) => Spec.Scale.NiceNiceTime(x))))));
+    implicit val SpecScaleAdditionalPropertiesEncoder: Encoder[Spec.Scale.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Scale.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecScaleAdditionalPropertiesDecoder: Decoder[Spec.Scale.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$7) => Spec.Scale.AdditionalProperties(x$7)))));
     implicit val SpecScaleTypeEncoder: Encoder[Spec.ScaleType] = Encoder.instance(((e: Spec.ScaleType) => parser.parse(e.json).toOption.get));
     implicit val SpecScaleTypeDecoder: Decoder[Spec.ScaleType] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -1402,12 +1563,18 @@ object Spec {
 }).map(((singleton) => singleton))))));
     implicit val SpecSortFieldEncoder: Encoder[Spec.SortField] = Encoder.instance(((cc: Spec.SortField) => Json.obj("field".->(cc.field.asJson),
  "op".->(cc.op.asJson),
- "order".->(cc.order.asJson))));
+ "order".->(cc.order.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecSortFieldDecoder: Decoder[Spec.SortField] = Decoder.instance(((c: HCursor) => c.downField("field").as[String]
 .flatMap(((field) => c.downField("op").as[AggregateOp]
-.flatMap(((op) => c.downField("order").as[Option[SortOrder]].map(((order) => Spec.SortField(field,
+.flatMap(((op) => c.downField("order").as[Option[SortOrder]]
+.flatMap(((order) => c.downField("additionalProperties").as[Option[Map[String,
+ SortField.AdditionalProperties]]].map(((additionalProperties) => Spec.SortField(field,
  op,
- order)))))))));
+ order,
+ additionalProperties)))))))))));
+    implicit val SpecSortFieldAdditionalPropertiesEncoder: Encoder[Spec.SortField.AdditionalProperties] = Encoder.instance(((wrapper: Spec.SortField.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecSortFieldAdditionalPropertiesDecoder: Decoder[Spec.SortField.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$8) => Spec.SortField.AdditionalProperties(x$8)))));
     implicit val SpecAggregateOpEncoder: Encoder[Spec.AggregateOp] = Encoder.instance(((e: Spec.AggregateOp) => parser.parse(e.json).toOption.get));
     implicit val SpecAggregateOpDecoder: Decoder[Spec.AggregateOp] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -1487,7 +1654,8 @@ object Spec {
  "steps".->(cc.steps.asJson),
  "minstep".->(cc.minstep.asJson),
  "div".->(cc.div.asJson),
- "maxbins".->(cc.maxbins.asJson))));
+ "maxbins".->(cc.maxbins.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecBinDecoder: Decoder[Spec.Bin] = Decoder.instance(((c: HCursor) => c.downField("min").as[Option[Double]]
 .flatMap(((min) => c.downField("max").as[Option[Double]]
 .flatMap(((max) => c.downField("base").as[Option[Double]]
@@ -1495,34 +1663,43 @@ object Spec {
 .flatMap(((step) => c.downField("steps").as[Option[List[Double]]]
 .flatMap(((steps) => c.downField("minstep").as[Option[Double]]
 .flatMap(((minstep) => c.downField("div").as[Option[List[Double]]]
-.flatMap(((div) => c.downField("maxbins").as[Option[Double]].map(((maxbins) => Spec.Bin(min,
+.flatMap(((div) => c.downField("maxbins").as[Option[Double]]
+.flatMap(((maxbins) => c.downField("additionalProperties").as[Option[Map[String,
+ Bin.AdditionalProperties]]].map(((additionalProperties) => Spec.Bin(min,
  max,
  base,
  step,
  steps,
  minstep,
  div,
- maxbins)))))))))))))))))));
+ maxbins,
+ additionalProperties)))))))))))))))))))));
+    implicit val SpecBinAdditionalPropertiesEncoder: Encoder[Spec.Bin.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Bin.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecBinAdditionalPropertiesDecoder: Decoder[Spec.Bin.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$9) => Spec.Bin.AdditionalProperties(x$9)))));
     implicit val SpecFieldDefEncoder: Encoder[Spec.FieldDef] = Encoder.instance(((cc: Spec.FieldDef) => Json.obj("field".->(cc.field.asJson),
  "type".->(cc.`type`.asJson),
  "value".->(cc.value.asJson),
  "timeUnit".->(cc.timeUnit.asJson),
  "bin".->(cc.bin.asJson),
  "aggregate".->(cc.aggregate.asJson),
- "title".->(cc.title.asJson))));
+ "title".->(cc.title.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFieldDefDecoder: Decoder[Spec.FieldDef] = Decoder.instance(((c: HCursor) => c.downField("field").as[Option[String]]
 .flatMap(((field) => c.downField("type").as[Option[Type]]
 .flatMap(((`type`) => c.downField("value").as[Option[FieldDef.ValueUnion]]
 .flatMap(((value) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("bin").as[Option[FieldDef.BinUnion]]
 .flatMap(((bin) => c.downField("aggregate").as[Option[AggregateOp]]
-.flatMap(((aggregate) => c.downField("title").as[Option[String]].map(((title) => Spec.FieldDef(field,
+.flatMap(((aggregate) => c.downField("title").as[Option[String]]
+.flatMap(((title) => c.downField("additionalProperties").as[Option[Map[String,
+ FieldDef.AdditionalProperties]]].map(((additionalProperties) => Spec.FieldDef(field,
  `type`,
  value,
  timeUnit,
  bin,
  aggregate,
- title)))))))))))))))));
+ title,
+ additionalProperties)))))))))))))))))));
     implicit val SpecFieldDefValueUnionEncoder: Encoder[Spec.FieldDef.ValueUnion] = Encoder.instance({
       case (ut @ ((_): Spec.FieldDef.ValueDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.FieldDef.ValueString)) => ut.x.asJson
@@ -1534,6 +1711,8 @@ object Spec {
       case (ut @ ((_): Spec.FieldDef.BinBin)) => ut.x.asJson
     });
     implicit val SpecFieldDefBinUnionDecoder: Decoder[Spec.FieldDef.BinUnion] = Decoder.instance(((c: HCursor) => c.as[Boolean].map(((x) => Spec.FieldDef.BinBoolean(x))).orElse(c.as[Bin].map(((x) => Spec.FieldDef.BinBin(x))))));
+    implicit val SpecFieldDefAdditionalPropertiesEncoder: Encoder[Spec.FieldDef.AdditionalProperties] = Encoder.instance(((wrapper: Spec.FieldDef.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFieldDefAdditionalPropertiesDecoder: Decoder[Spec.FieldDef.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$10) => Spec.FieldDef.AdditionalProperties(x$10)))));
     implicit val SpecChannelDefWithLegendEncoder: Encoder[Spec.ChannelDefWithLegend] = Encoder.instance(((cc: Spec.ChannelDefWithLegend) => Json.obj("legend".->(cc.legend.asJson),
  "scale".->(cc.scale.asJson),
  "sort".->(cc.sort.asJson),
@@ -1543,7 +1722,8 @@ object Spec {
  "timeUnit".->(cc.timeUnit.asJson),
  "bin".->(cc.bin.asJson),
  "aggregate".->(cc.aggregate.asJson),
- "title".->(cc.title.asJson))));
+ "title".->(cc.title.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecChannelDefWithLegendDecoder: Decoder[Spec.ChannelDefWithLegend] = Decoder.instance(((c: HCursor) => c.downField("legend").as[Option[Legend]]
 .flatMap(((legend) => c.downField("scale").as[Option[Scale]]
 .flatMap(((scale) => c.downField("sort").as[Option[ChannelDefWithLegend.SortUnion]]
@@ -1553,7 +1733,9 @@ object Spec {
 .flatMap(((value) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("bin").as[Option[ChannelDefWithLegend.BinUnion]]
 .flatMap(((bin) => c.downField("aggregate").as[Option[AggregateOp]]
-.flatMap(((aggregate) => c.downField("title").as[Option[String]].map(((title) => Spec.ChannelDefWithLegend(legend,
+.flatMap(((aggregate) => c.downField("title").as[Option[String]]
+.flatMap(((title) => c.downField("additionalProperties").as[Option[Map[String,
+ ChannelDefWithLegend.AdditionalProperties]]].map(((additionalProperties) => Spec.ChannelDefWithLegend(legend,
  scale,
  sort,
  field,
@@ -1562,7 +1744,8 @@ object Spec {
  timeUnit,
  bin,
  aggregate,
- title)))))))))))))))))))))));
+ title,
+ additionalProperties)))))))))))))))))))))))));
     implicit val SpecChannelDefWithLegendSortUnionEncoder: Encoder[Spec.ChannelDefWithLegend.SortUnion] = Encoder.instance({
       case (ut @ ((_): Spec.ChannelDefWithLegend.SortSortField)) => ut.x.asJson
       case (ut @ ((_): Spec.ChannelDefWithLegend.SortSortOrder)) => ut.x.asJson
@@ -1579,6 +1762,8 @@ object Spec {
       case (ut @ ((_): Spec.ChannelDefWithLegend.BinBin)) => ut.x.asJson
     });
     implicit val SpecChannelDefWithLegendBinUnionDecoder: Decoder[Spec.ChannelDefWithLegend.BinUnion] = Decoder.instance(((c: HCursor) => c.as[Boolean].map(((x) => Spec.ChannelDefWithLegend.BinBoolean(x))).orElse(c.as[Bin].map(((x) => Spec.ChannelDefWithLegend.BinBin(x))))));
+    implicit val SpecChannelDefWithLegendAdditionalPropertiesEncoder: Encoder[Spec.ChannelDefWithLegend.AdditionalProperties] = Encoder.instance(((wrapper: Spec.ChannelDefWithLegend.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecChannelDefWithLegendAdditionalPropertiesDecoder: Decoder[Spec.ChannelDefWithLegend.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$11) => Spec.ChannelDefWithLegend.AdditionalProperties(x$11)))));
     implicit val SpecLegendEncoder: Encoder[Spec.Legend] = Encoder.instance(((cc: Spec.Legend) => Json.obj("format".->(cc.format.asJson),
  "title".->(cc.title.asJson),
  "values".->(cc.values.asJson),
@@ -1605,7 +1790,8 @@ object Spec {
  "titleFont".->(cc.titleFont.asJson),
  "titleFontSize".->(cc.titleFontSize.asJson),
  "titleFontWeight".->(cc.titleFontWeight.asJson),
- "properties".->(cc.properties.asJson))));
+ "properties".->(cc.properties.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecLegendDecoder: Decoder[Spec.Legend] = Decoder.instance(((c: HCursor) => c.downField("format").as[Option[String]]
 .flatMap(((format) => c.downField("title").as[Option[String]]
 .flatMap(((title) => c.downField("values").as[Option[List[Legend.Values]]]
@@ -1632,7 +1818,9 @@ object Spec {
 .flatMap(((titleColor) => c.downField("titleFont").as[Option[String]]
 .flatMap(((titleFont) => c.downField("titleFontSize").as[Option[Double]]
 .flatMap(((titleFontSize) => c.downField("titleFontWeight").as[Option[String]]
-.flatMap(((titleFontWeight) => c.downField("properties").as[Option[Legend.Properties]].map(((properties) => Spec.Legend(format,
+.flatMap(((titleFontWeight) => c.downField("properties").as[Option[Legend.Properties]]
+.flatMap(((properties) => c.downField("additionalProperties").as[Option[Map[String,
+ Legend.AdditionalProperties]]].map(((additionalProperties) => Spec.Legend(format,
  title,
  values,
  orient,
@@ -1658,11 +1846,14 @@ object Spec {
  titleFont,
  titleFontSize,
  titleFontWeight,
- properties)))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+ properties,
+ additionalProperties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
     implicit val SpecLegendValuesEncoder: Encoder[Spec.Legend.Values] = Encoder.instance(((wrapper: Spec.Legend.Values) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecLegendValuesDecoder: Decoder[Spec.Legend.Values] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$2) => Spec.Legend.Values(x$2)))));
+    implicit val SpecLegendValuesDecoder: Decoder[Spec.Legend.Values] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$12) => Spec.Legend.Values(x$12)))));
     implicit val SpecLegendPropertiesEncoder: Encoder[Spec.Legend.Properties] = Encoder.instance(((wrapper: Spec.Legend.Properties) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecLegendPropertiesDecoder: Decoder[Spec.Legend.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$3) => Spec.Legend.Properties(x$3)))));
+    implicit val SpecLegendPropertiesDecoder: Decoder[Spec.Legend.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$13) => Spec.Legend.Properties(x$13)))));
+    implicit val SpecLegendAdditionalPropertiesEncoder: Encoder[Spec.Legend.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Legend.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecLegendAdditionalPropertiesDecoder: Decoder[Spec.Legend.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$14) => Spec.Legend.AdditionalProperties(x$14)))));
     implicit val SpecOrderChannelDefEncoder: Encoder[Spec.OrderChannelDef] = Encoder.instance(((cc: Spec.OrderChannelDef) => Json.obj("sort".->(cc.sort.asJson),
  "field".->(cc.field.asJson),
  "type".->(cc.`type`.asJson),
@@ -1670,7 +1861,8 @@ object Spec {
  "timeUnit".->(cc.timeUnit.asJson),
  "bin".->(cc.bin.asJson),
  "aggregate".->(cc.aggregate.asJson),
- "title".->(cc.title.asJson))));
+ "title".->(cc.title.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecOrderChannelDefDecoder: Decoder[Spec.OrderChannelDef] = Decoder.instance(((c: HCursor) => c.downField("sort").as[Option[SortOrder]]
 .flatMap(((sort) => c.downField("field").as[Option[String]]
 .flatMap(((field) => c.downField("type").as[Option[Type]]
@@ -1678,14 +1870,17 @@ object Spec {
 .flatMap(((value) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("bin").as[Option[OrderChannelDef.BinUnion]]
 .flatMap(((bin) => c.downField("aggregate").as[Option[AggregateOp]]
-.flatMap(((aggregate) => c.downField("title").as[Option[String]].map(((title) => Spec.OrderChannelDef(sort,
+.flatMap(((aggregate) => c.downField("title").as[Option[String]]
+.flatMap(((title) => c.downField("additionalProperties").as[Option[Map[String,
+ OrderChannelDef.AdditionalProperties]]].map(((additionalProperties) => Spec.OrderChannelDef(sort,
  field,
  `type`,
  value,
  timeUnit,
  bin,
  aggregate,
- title)))))))))))))))))));
+ title,
+ additionalProperties)))))))))))))))))))));
     implicit val SpecOrderChannelDefValueUnionEncoder: Encoder[Spec.OrderChannelDef.ValueUnion] = Encoder.instance({
       case (ut @ ((_): Spec.OrderChannelDef.ValueDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.OrderChannelDef.ValueString)) => ut.x.asJson
@@ -1697,27 +1892,41 @@ object Spec {
       case (ut @ ((_): Spec.OrderChannelDef.BinBin)) => ut.x.asJson
     });
     implicit val SpecOrderChannelDefBinUnionDecoder: Decoder[Spec.OrderChannelDef.BinUnion] = Decoder.instance(((c: HCursor) => c.as[Boolean].map(((x) => Spec.OrderChannelDef.BinBoolean(x))).orElse(c.as[Bin].map(((x) => Spec.OrderChannelDef.BinBin(x))))));
+    implicit val SpecOrderChannelDefAdditionalPropertiesEncoder: Encoder[Spec.OrderChannelDef.AdditionalProperties] = Encoder.instance(((wrapper: Spec.OrderChannelDef.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecOrderChannelDefAdditionalPropertiesDecoder: Decoder[Spec.OrderChannelDef.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$15) => Spec.OrderChannelDef.AdditionalProperties(x$15)))));
     implicit val SpecDataEncoder: Encoder[Spec.Data] = Encoder.instance(((cc: Spec.Data) => Json.obj("format".->(cc.format.asJson),
  "url".->(cc.url.asJson),
- "values".->(cc.values.asJson))));
+ "values".->(cc.values.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecDataDecoder: Decoder[Spec.Data] = Decoder.instance(((c: HCursor) => c.downField("format").as[Option[DataFormat]]
 .flatMap(((format) => c.downField("url").as[Option[String]]
-.flatMap(((url) => c.downField("values").as[Option[List[Data.Values]]].map(((values) => Spec.Data(format,
+.flatMap(((url) => c.downField("values").as[Option[List[Data.Values]]]
+.flatMap(((values) => c.downField("additionalProperties").as[Option[Map[String,
+ Data.AdditionalProperties]]].map(((additionalProperties) => Spec.Data(format,
  url,
- values)))))))));
+ values,
+ additionalProperties)))))))))));
     implicit val SpecDataValuesEncoder: Encoder[Spec.Data.Values] = Encoder.instance(((wrapper: Spec.Data.Values) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecDataValuesDecoder: Decoder[Spec.Data.Values] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$4) => Spec.Data.Values(x$4)))));
+    implicit val SpecDataValuesDecoder: Decoder[Spec.Data.Values] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$16) => Spec.Data.Values(x$16)))));
+    implicit val SpecDataAdditionalPropertiesEncoder: Encoder[Spec.Data.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Data.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecDataAdditionalPropertiesDecoder: Decoder[Spec.Data.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$17) => Spec.Data.AdditionalProperties(x$17)))));
     implicit val SpecDataFormatEncoder: Encoder[Spec.DataFormat] = Encoder.instance(((cc: Spec.DataFormat) => Json.obj("type".->(cc.`type`.asJson),
  "property".->(cc.property.asJson),
  "feature".->(cc.feature.asJson),
- "mesh".->(cc.mesh.asJson))));
+ "mesh".->(cc.mesh.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecDataFormatDecoder: Decoder[Spec.DataFormat] = Decoder.instance(((c: HCursor) => c.downField("type").as[Option[DataFormatType]]
 .flatMap(((`type`) => c.downField("property").as[Option[String]]
 .flatMap(((property) => c.downField("feature").as[Option[String]]
-.flatMap(((feature) => c.downField("mesh").as[Option[String]].map(((mesh) => Spec.DataFormat(`type`,
+.flatMap(((feature) => c.downField("mesh").as[Option[String]]
+.flatMap(((mesh) => c.downField("additionalProperties").as[Option[Map[String,
+ DataFormat.AdditionalProperties]]].map(((additionalProperties) => Spec.DataFormat(`type`,
  property,
  feature,
- mesh)))))))))));
+ mesh,
+ additionalProperties)))))))))))));
+    implicit val SpecDataFormatAdditionalPropertiesEncoder: Encoder[Spec.DataFormat.AdditionalProperties] = Encoder.instance(((wrapper: Spec.DataFormat.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecDataFormatAdditionalPropertiesDecoder: Decoder[Spec.DataFormat.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$18) => Spec.DataFormat.AdditionalProperties(x$18)))));
     implicit val SpecDataFormatTypeEncoder: Encoder[Spec.DataFormatType] = Encoder.instance(((e: Spec.DataFormatType) => parser.parse(e.json).toOption.get));
     implicit val SpecDataFormatTypeDecoder: Decoder[Spec.DataFormatType] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -1730,12 +1939,16 @@ object Spec {
 }).map(((singleton) => singleton))))));
     implicit val SpecTransformEncoder: Encoder[Spec.Transform] = Encoder.instance(((cc: Spec.Transform) => Json.obj("filter".->(cc.filter.asJson),
  "filterInvalid".->(cc.filterInvalid.asJson),
- "calculate".->(cc.calculate.asJson))));
+ "calculate".->(cc.calculate.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecTransformDecoder: Decoder[Spec.Transform] = Decoder.instance(((c: HCursor) => c.downField("filter").as[Option[Transform.FilterUnion]]
 .flatMap(((filter) => c.downField("filterInvalid").as[Option[Boolean]]
-.flatMap(((filterInvalid) => c.downField("calculate").as[Option[List[Formula]]].map(((calculate) => Spec.Transform(filter,
+.flatMap(((filterInvalid) => c.downField("calculate").as[Option[List[Formula]]]
+.flatMap(((calculate) => c.downField("additionalProperties").as[Option[Map[String,
+ Transform.AdditionalProperties]]].map(((additionalProperties) => Spec.Transform(filter,
  filterInvalid,
- calculate)))))))));
+ calculate,
+ additionalProperties)))))))))));
     implicit val SpecTransformFilterUnionEncoder: Encoder[Spec.Transform.FilterUnion] = Encoder.instance({
       case (ut @ ((_): Spec.Transform.FilterString)) => ut.x.asJson
       case (ut @ ((_): Spec.Transform.FilterEqualFilter)) => ut.x.asJson
@@ -1751,14 +1964,20 @@ object Spec {
       case (ut @ ((_): Spec.Transform.Filter5OneOfFilter)) => ut.x.asJson
     });
     implicit val SpecTransformFilter5UnionDecoder: Decoder[Spec.Transform.Filter5Union] = Decoder.instance(((c: HCursor) => c.as[String].map(((x) => Spec.Transform.Filter5String(x))).orElse(c.as[EqualFilter].map(((x) => Spec.Transform.Filter5EqualFilter(x)))).orElse(c.as[RangeFilter].map(((x) => Spec.Transform.Filter5RangeFilter(x)))).orElse(c.as[OneOfFilter].map(((x) => Spec.Transform.Filter5OneOfFilter(x))))));
+    implicit val SpecTransformAdditionalPropertiesEncoder: Encoder[Spec.Transform.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Transform.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecTransformAdditionalPropertiesDecoder: Decoder[Spec.Transform.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$19) => Spec.Transform.AdditionalProperties(x$19)))));
     implicit val SpecEqualFilterEncoder: Encoder[Spec.EqualFilter] = Encoder.instance(((cc: Spec.EqualFilter) => Json.obj("timeUnit".->(cc.timeUnit.asJson),
  "field".->(cc.field.asJson),
- "equal".->(cc.equal.asJson))));
+ "equal".->(cc.equal.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecEqualFilterDecoder: Decoder[Spec.EqualFilter] = Decoder.instance(((c: HCursor) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("field").as[String]
-.flatMap(((field) => c.downField("equal").as[EqualFilter.EqualUnion].map(((equal) => Spec.EqualFilter(timeUnit,
+.flatMap(((field) => c.downField("equal").as[EqualFilter.EqualUnion]
+.flatMap(((equal) => c.downField("additionalProperties").as[Option[Map[String,
+ EqualFilter.AdditionalProperties]]].map(((additionalProperties) => Spec.EqualFilter(timeUnit,
  field,
- equal)))))))));
+ equal,
+ additionalProperties)))))))))));
     implicit val SpecEqualFilterEqualUnionEncoder: Encoder[Spec.EqualFilter.EqualUnion] = Encoder.instance({
       case (ut @ ((_): Spec.EqualFilter.EqualString)) => ut.x.asJson
       case (ut @ ((_): Spec.EqualFilter.EqualDouble)) => ut.x.asJson
@@ -1766,6 +1985,8 @@ object Spec {
       case (ut @ ((_): Spec.EqualFilter.EqualDateTime)) => ut.x.asJson
     });
     implicit val SpecEqualFilterEqualUnionDecoder: Decoder[Spec.EqualFilter.EqualUnion] = Decoder.instance(((c: HCursor) => c.as[String].map(((x) => Spec.EqualFilter.EqualString(x))).orElse(c.as[Double].map(((x) => Spec.EqualFilter.EqualDouble(x)))).orElse(c.as[Boolean].map(((x) => Spec.EqualFilter.EqualBoolean(x)))).orElse(c.as[DateTime].map(((x) => Spec.EqualFilter.EqualDateTime(x))))));
+    implicit val SpecEqualFilterAdditionalPropertiesEncoder: Encoder[Spec.EqualFilter.AdditionalProperties] = Encoder.instance(((wrapper: Spec.EqualFilter.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecEqualFilterAdditionalPropertiesDecoder: Decoder[Spec.EqualFilter.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$20) => Spec.EqualFilter.AdditionalProperties(x$20)))));
     implicit val SpecDateTimeEncoder: Encoder[Spec.DateTime] = Encoder.instance(((cc: Spec.DateTime) => Json.obj("year".->(cc.year.asJson),
  "quarter".->(cc.quarter.asJson),
  "month".->(cc.month.asJson),
@@ -1774,7 +1995,8 @@ object Spec {
  "hours".->(cc.hours.asJson),
  "minutes".->(cc.minutes.asJson),
  "seconds".->(cc.seconds.asJson),
- "milliseconds".->(cc.milliseconds.asJson))));
+ "milliseconds".->(cc.milliseconds.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecDateTimeDecoder: Decoder[Spec.DateTime] = Decoder.instance(((c: HCursor) => c.downField("year").as[Option[Double]]
 .flatMap(((year) => c.downField("quarter").as[Option[Double]]
 .flatMap(((quarter) => c.downField("month").as[Option[DateTime.MonthUnion]]
@@ -1783,7 +2005,9 @@ object Spec {
 .flatMap(((day) => c.downField("hours").as[Option[Double]]
 .flatMap(((hours) => c.downField("minutes").as[Option[Double]]
 .flatMap(((minutes) => c.downField("seconds").as[Option[Double]]
-.flatMap(((seconds) => c.downField("milliseconds").as[Option[Double]].map(((milliseconds) => Spec.DateTime(year,
+.flatMap(((seconds) => c.downField("milliseconds").as[Option[Double]]
+.flatMap(((milliseconds) => c.downField("additionalProperties").as[Option[Map[String,
+ DateTime.AdditionalProperties]]].map(((additionalProperties) => Spec.DateTime(year,
  quarter,
  month,
  date,
@@ -1791,7 +2015,8 @@ object Spec {
  hours,
  minutes,
  seconds,
- milliseconds)))))))))))))))))))));
+ milliseconds,
+ additionalProperties)))))))))))))))))))))));
     implicit val SpecDateTimeMonthUnionEncoder: Encoder[Spec.DateTime.MonthUnion] = Encoder.instance({
       case (ut @ ((_): Spec.DateTime.MonthDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.DateTime.MonthString)) => ut.x.asJson
@@ -1802,27 +2027,39 @@ object Spec {
       case (ut @ ((_): Spec.DateTime.DayString)) => ut.x.asJson
     });
     implicit val SpecDateTimeDayUnionDecoder: Decoder[Spec.DateTime.DayUnion] = Decoder.instance(((c: HCursor) => c.as[Double].map(((x) => Spec.DateTime.DayDouble(x))).orElse(c.as[String].map(((x) => Spec.DateTime.DayString(x))))));
+    implicit val SpecDateTimeAdditionalPropertiesEncoder: Encoder[Spec.DateTime.AdditionalProperties] = Encoder.instance(((wrapper: Spec.DateTime.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecDateTimeAdditionalPropertiesDecoder: Decoder[Spec.DateTime.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$21) => Spec.DateTime.AdditionalProperties(x$21)))));
     implicit val SpecRangeFilterEncoder: Encoder[Spec.RangeFilter] = Encoder.instance(((cc: Spec.RangeFilter) => Json.obj("timeUnit".->(cc.timeUnit.asJson),
  "field".->(cc.field.asJson),
- "range".->(cc.range.asJson))));
+ "range".->(cc.range.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecRangeFilterDecoder: Decoder[Spec.RangeFilter] = Decoder.instance(((c: HCursor) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("field").as[String]
-.flatMap(((field) => c.downField("range").as[List[RangeFilter.RangeUnion]].map(((range) => Spec.RangeFilter(timeUnit,
+.flatMap(((field) => c.downField("range").as[List[RangeFilter.RangeUnion]]
+.flatMap(((range) => c.downField("additionalProperties").as[Option[Map[String,
+ RangeFilter.AdditionalProperties]]].map(((additionalProperties) => Spec.RangeFilter(timeUnit,
  field,
- range)))))))));
+ range,
+ additionalProperties)))))))))));
     implicit val SpecRangeFilterRangeUnionEncoder: Encoder[Spec.RangeFilter.RangeUnion] = Encoder.instance({
       case (ut @ ((_): Spec.RangeFilter.RangeDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.RangeFilter.RangeDateTime)) => ut.x.asJson
     });
     implicit val SpecRangeFilterRangeUnionDecoder: Decoder[Spec.RangeFilter.RangeUnion] = Decoder.instance(((c: HCursor) => c.as[Double].map(((x) => Spec.RangeFilter.RangeDouble(x))).orElse(c.as[DateTime].map(((x) => Spec.RangeFilter.RangeDateTime(x))))));
+    implicit val SpecRangeFilterAdditionalPropertiesEncoder: Encoder[Spec.RangeFilter.AdditionalProperties] = Encoder.instance(((wrapper: Spec.RangeFilter.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecRangeFilterAdditionalPropertiesDecoder: Decoder[Spec.RangeFilter.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$22) => Spec.RangeFilter.AdditionalProperties(x$22)))));
     implicit val SpecOneOfFilterEncoder: Encoder[Spec.OneOfFilter] = Encoder.instance(((cc: Spec.OneOfFilter) => Json.obj("timeUnit".->(cc.timeUnit.asJson),
  "field".->(cc.field.asJson),
- "oneOf".->(cc.oneOf.asJson))));
+ "oneOf".->(cc.oneOf.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecOneOfFilterDecoder: Decoder[Spec.OneOfFilter] = Decoder.instance(((c: HCursor) => c.downField("timeUnit").as[Option[TimeUnit]]
 .flatMap(((timeUnit) => c.downField("field").as[String]
-.flatMap(((field) => c.downField("oneOf").as[List[OneOfFilter.OneOfUnion]].map(((oneOf) => Spec.OneOfFilter(timeUnit,
+.flatMap(((field) => c.downField("oneOf").as[List[OneOfFilter.OneOfUnion]]
+.flatMap(((oneOf) => c.downField("additionalProperties").as[Option[Map[String,
+ OneOfFilter.AdditionalProperties]]].map(((additionalProperties) => Spec.OneOfFilter(timeUnit,
  field,
- oneOf)))))))));
+ oneOf,
+ additionalProperties)))))))))));
     implicit val SpecOneOfFilterOneOfUnionEncoder: Encoder[Spec.OneOfFilter.OneOfUnion] = Encoder.instance({
       case (ut @ ((_): Spec.OneOfFilter.OneOfString)) => ut.x.asJson
       case (ut @ ((_): Spec.OneOfFilter.OneOfDouble)) => ut.x.asJson
@@ -1830,11 +2067,19 @@ object Spec {
       case (ut @ ((_): Spec.OneOfFilter.OneOfDateTime)) => ut.x.asJson
     });
     implicit val SpecOneOfFilterOneOfUnionDecoder: Decoder[Spec.OneOfFilter.OneOfUnion] = Decoder.instance(((c: HCursor) => c.as[String].map(((x) => Spec.OneOfFilter.OneOfString(x))).orElse(c.as[Double].map(((x) => Spec.OneOfFilter.OneOfDouble(x)))).orElse(c.as[Boolean].map(((x) => Spec.OneOfFilter.OneOfBoolean(x)))).orElse(c.as[DateTime].map(((x) => Spec.OneOfFilter.OneOfDateTime(x))))));
+    implicit val SpecOneOfFilterAdditionalPropertiesEncoder: Encoder[Spec.OneOfFilter.AdditionalProperties] = Encoder.instance(((wrapper: Spec.OneOfFilter.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecOneOfFilterAdditionalPropertiesDecoder: Decoder[Spec.OneOfFilter.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$23) => Spec.OneOfFilter.AdditionalProperties(x$23)))));
     implicit val SpecFormulaEncoder: Encoder[Spec.Formula] = Encoder.instance(((cc: Spec.Formula) => Json.obj("field".->(cc.field.asJson),
- "expr".->(cc.expr.asJson))));
+ "expr".->(cc.expr.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFormulaDecoder: Decoder[Spec.Formula] = Decoder.instance(((c: HCursor) => c.downField("field").as[String]
-.flatMap(((field) => c.downField("expr").as[String].map(((expr) => Spec.Formula(field,
- expr)))))));
+.flatMap(((field) => c.downField("expr").as[String]
+.flatMap(((expr) => c.downField("additionalProperties").as[Option[Map[String,
+ Formula.AdditionalProperties]]].map(((additionalProperties) => Spec.Formula(field,
+ expr,
+ additionalProperties)))))))));
+    implicit val SpecFormulaAdditionalPropertiesEncoder: Encoder[Spec.Formula.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Formula.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFormulaAdditionalPropertiesDecoder: Decoder[Spec.Formula.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$24) => Spec.Formula.AdditionalProperties(x$24)))));
     implicit val SpecConfigEncoder: Encoder[Spec.Config] = Encoder.instance(((cc: Spec.Config) => Json.obj("viewport".->(cc.viewport.asJson),
  "background".->(cc.background.asJson),
  "numberFormat".->(cc.numberFormat.asJson),
@@ -1846,7 +2091,8 @@ object Spec {
  "scale".->(cc.scale.asJson),
  "axis".->(cc.axis.asJson),
  "legend".->(cc.legend.asJson),
- "facet".->(cc.facet.asJson))));
+ "facet".->(cc.facet.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecConfigDecoder: Decoder[Spec.Config] = Decoder.instance(((c: HCursor) => c.downField("viewport").as[Option[Double]]
 .flatMap(((viewport) => c.downField("background").as[Option[String]]
 .flatMap(((background) => c.downField("numberFormat").as[Option[String]]
@@ -1858,7 +2104,9 @@ object Spec {
 .flatMap(((overlay) => c.downField("scale").as[Option[ScaleConfig]]
 .flatMap(((scale) => c.downField("axis").as[Option[AxisConfig]]
 .flatMap(((axis) => c.downField("legend").as[Option[LegendConfig]]
-.flatMap(((legend) => c.downField("facet").as[Option[FacetConfig]].map(((facet) => Spec.Config(viewport,
+.flatMap(((legend) => c.downField("facet").as[Option[FacetConfig]]
+.flatMap(((facet) => c.downField("additionalProperties").as[Option[Map[String,
+ Config.AdditionalProperties]]].map(((additionalProperties) => Spec.Config(viewport,
  background,
  numberFormat,
  timeFormat,
@@ -1869,7 +2117,10 @@ object Spec {
  scale,
  axis,
  legend,
- facet)))))))))))))))))))))))))));
+ facet,
+ additionalProperties)))))))))))))))))))))))))))));
+    implicit val SpecConfigAdditionalPropertiesEncoder: Encoder[Spec.Config.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Config.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecConfigAdditionalPropertiesDecoder: Decoder[Spec.Config.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$25) => Spec.Config.AdditionalProperties(x$25)))));
     implicit val SpecCellConfigEncoder: Encoder[Spec.CellConfig] = Encoder.instance(((cc: Spec.CellConfig) => Json.obj("width".->(cc.width.asJson),
  "height".->(cc.height.asJson),
  "clip".->(cc.clip.asJson),
@@ -1879,7 +2130,8 @@ object Spec {
  "strokeOpacity".->(cc.strokeOpacity.asJson),
  "strokeWidth".->(cc.strokeWidth.asJson),
  "strokeDash".->(cc.strokeDash.asJson),
- "strokeDashOffset".->(cc.strokeDashOffset.asJson))));
+ "strokeDashOffset".->(cc.strokeDashOffset.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecCellConfigDecoder: Decoder[Spec.CellConfig] = Decoder.instance(((c: HCursor) => c.downField("width").as[Option[Double]]
 .flatMap(((width) => c.downField("height").as[Option[Double]]
 .flatMap(((height) => c.downField("clip").as[Option[Boolean]]
@@ -1889,7 +2141,9 @@ object Spec {
 .flatMap(((stroke) => c.downField("strokeOpacity").as[Option[Double]]
 .flatMap(((strokeOpacity) => c.downField("strokeWidth").as[Option[Double]]
 .flatMap(((strokeWidth) => c.downField("strokeDash").as[Option[List[Double]]]
-.flatMap(((strokeDash) => c.downField("strokeDashOffset").as[Option[Double]].map(((strokeDashOffset) => Spec.CellConfig(width,
+.flatMap(((strokeDash) => c.downField("strokeDashOffset").as[Option[Double]]
+.flatMap(((strokeDashOffset) => c.downField("additionalProperties").as[Option[Map[String,
+ CellConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.CellConfig(width,
  height,
  clip,
  fill,
@@ -1898,7 +2152,10 @@ object Spec {
  strokeOpacity,
  strokeWidth,
  strokeDash,
- strokeDashOffset)))))))))))))))))))))));
+ strokeDashOffset,
+ additionalProperties)))))))))))))))))))))))));
+    implicit val SpecCellConfigAdditionalPropertiesEncoder: Encoder[Spec.CellConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.CellConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecCellConfigAdditionalPropertiesDecoder: Decoder[Spec.CellConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$26) => Spec.CellConfig.AdditionalProperties(x$26)))));
     implicit val SpecMarkConfigEncoder: Encoder[Spec.MarkConfig] = Encoder.instance(((cc: Spec.MarkConfig) => Json.obj("filled".->(cc.filled.asJson),
  "color".->(cc.color.asJson),
  "fill".->(cc.fill.asJson),
@@ -1935,7 +2192,8 @@ object Spec {
  "format".->(cc.format.asJson),
  "shortTimeLabels".->(cc.shortTimeLabels.asJson),
  "text".->(cc.text.asJson),
- "applyColorToBackground".->(cc.applyColorToBackground.asJson))));
+ "applyColorToBackground".->(cc.applyColorToBackground.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecMarkConfigDecoder: Decoder[Spec.MarkConfig] = Decoder.instance(((c: HCursor) => c.downField("filled").as[Option[Boolean]]
 .flatMap(((filled) => c.downField("color").as[Option[String]]
 .flatMap(((color) => c.downField("fill").as[Option[String]]
@@ -1972,7 +2230,9 @@ object Spec {
 .flatMap(((fontWeight) => c.downField("format").as[Option[String]]
 .flatMap(((format) => c.downField("shortTimeLabels").as[Option[Boolean]]
 .flatMap(((shortTimeLabels) => c.downField("text").as[Option[String]]
-.flatMap(((text) => c.downField("applyColorToBackground").as[Option[Boolean]].map(((applyColorToBackground) => Spec.MarkConfig(filled,
+.flatMap(((text) => c.downField("applyColorToBackground").as[Option[Boolean]]
+.flatMap(((applyColorToBackground) => c.downField("additionalProperties").as[Option[Map[String,
+ MarkConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.MarkConfig(filled,
  color,
  fill,
  stroke,
@@ -2008,12 +2268,15 @@ object Spec {
  format,
  shortTimeLabels,
  text,
- applyColorToBackground)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+ applyColorToBackground,
+ additionalProperties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
     implicit val SpecMarkConfigShapeUnionEncoder: Encoder[Spec.MarkConfig.ShapeUnion] = Encoder.instance({
       case (ut @ ((_): Spec.MarkConfig.ShapeShape)) => ut.x.asJson
       case (ut @ ((_): Spec.MarkConfig.ShapeString)) => ut.x.asJson
     });
     implicit val SpecMarkConfigShapeUnionDecoder: Decoder[Spec.MarkConfig.ShapeUnion] = Decoder.instance(((c: HCursor) => c.as[Shape].map(((x) => Spec.MarkConfig.ShapeShape(x))).orElse(c.as[String].map(((x) => Spec.MarkConfig.ShapeString(x))))));
+    implicit val SpecMarkConfigAdditionalPropertiesEncoder: Encoder[Spec.MarkConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.MarkConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecMarkConfigAdditionalPropertiesDecoder: Decoder[Spec.MarkConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$27) => Spec.MarkConfig.AdditionalProperties(x$27)))));
     implicit val SpecStackOffsetEncoder: Encoder[Spec.StackOffset] = Encoder.instance(((e: Spec.StackOffset) => parser.parse(e.json).toOption.get));
     implicit val SpecStackOffsetDecoder: Decoder[Spec.StackOffset] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -2100,14 +2363,20 @@ object Spec {
     implicit val SpecOverlayConfigEncoder: Encoder[Spec.OverlayConfig] = Encoder.instance(((cc: Spec.OverlayConfig) => Json.obj("line".->(cc.line.asJson),
  "area".->(cc.area.asJson),
  "pointStyle".->(cc.pointStyle.asJson),
- "lineStyle".->(cc.lineStyle.asJson))));
+ "lineStyle".->(cc.lineStyle.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecOverlayConfigDecoder: Decoder[Spec.OverlayConfig] = Decoder.instance(((c: HCursor) => c.downField("line").as[Option[Boolean]]
 .flatMap(((line) => c.downField("area").as[Option[AreaOverlay]]
 .flatMap(((area) => c.downField("pointStyle").as[Option[MarkConfig]]
-.flatMap(((pointStyle) => c.downField("lineStyle").as[Option[MarkConfig]].map(((lineStyle) => Spec.OverlayConfig(line,
+.flatMap(((pointStyle) => c.downField("lineStyle").as[Option[MarkConfig]]
+.flatMap(((lineStyle) => c.downField("additionalProperties").as[Option[Map[String,
+ OverlayConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.OverlayConfig(line,
  area,
  pointStyle,
- lineStyle)))))))))));
+ lineStyle,
+ additionalProperties)))))))))))));
+    implicit val SpecOverlayConfigAdditionalPropertiesEncoder: Encoder[Spec.OverlayConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.OverlayConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecOverlayConfigAdditionalPropertiesDecoder: Decoder[Spec.OverlayConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$28) => Spec.OverlayConfig.AdditionalProperties(x$28)))));
     implicit val SpecAreaOverlayEncoder: Encoder[Spec.AreaOverlay] = Encoder.instance(((e: Spec.AreaOverlay) => parser.parse(e.json).toOption.get));
     implicit val SpecAreaOverlayDecoder: Decoder[Spec.AreaOverlay] = Decoder.instance(((c: HCursor) => c.as[Json]
 .flatMap(((json) => (json match {
@@ -2130,7 +2399,8 @@ object Spec {
  "fontSizeRange".->(cc.fontSizeRange.asJson),
  "ruleSizeRange".->(cc.ruleSizeRange.asJson),
  "tickSizeRange".->(cc.tickSizeRange.asJson),
- "pointSizeRange".->(cc.pointSizeRange.asJson))));
+ "pointSizeRange".->(cc.pointSizeRange.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecScaleConfigDecoder: Decoder[Spec.ScaleConfig] = Decoder.instance(((c: HCursor) => c.downField("round").as[Option[Boolean]]
 .flatMap(((round) => c.downField("textBandWidth").as[Option[Double]]
 .flatMap(((textBandWidth) => c.downField("bandSize").as[Option[ScaleConfig.BandSizeUnion]]
@@ -2144,7 +2414,9 @@ object Spec {
 .flatMap(((barSizeRange) => c.downField("fontSizeRange").as[Option[List[Double]]]
 .flatMap(((fontSizeRange) => c.downField("ruleSizeRange").as[Option[List[Double]]]
 .flatMap(((ruleSizeRange) => c.downField("tickSizeRange").as[Option[List[Double]]]
-.flatMap(((tickSizeRange) => c.downField("pointSizeRange").as[Option[List[Double]]].map(((pointSizeRange) => Spec.ScaleConfig(round,
+.flatMap(((tickSizeRange) => c.downField("pointSizeRange").as[Option[List[Double]]]
+.flatMap(((pointSizeRange) => c.downField("additionalProperties").as[Option[Map[String,
+ ScaleConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.ScaleConfig(round,
  textBandWidth,
  bandSize,
  opacity,
@@ -2157,7 +2429,8 @@ object Spec {
  fontSizeRange,
  ruleSizeRange,
  tickSizeRange,
- pointSizeRange)))))))))))))))))))))))))))))));
+ pointSizeRange,
+ additionalProperties)))))))))))))))))))))))))))))))));
     implicit val SpecScaleConfigBandSizeUnionEncoder: Encoder[Spec.ScaleConfig.BandSizeUnion] = Encoder.instance({
       case (ut @ ((_): Spec.ScaleConfig.BandSizeDouble)) => ut.x.asJson
       case (ut @ ((_): Spec.ScaleConfig.BandSizeBandSize)) => ut.x.asJson
@@ -2178,6 +2451,8 @@ object Spec {
       case (ut @ ((_): Spec.ScaleConfig.ShapeRangeListString)) => ut.x.asJson
     });
     implicit val SpecScaleConfigShapeRangeUnionDecoder: Decoder[Spec.ScaleConfig.ShapeRangeUnion] = Decoder.instance(((c: HCursor) => c.as[String].map(((x) => Spec.ScaleConfig.ShapeRangeString(x))).orElse(c.as[List[String]].map(((x) => Spec.ScaleConfig.ShapeRangeListString(x))))));
+    implicit val SpecScaleConfigAdditionalPropertiesEncoder: Encoder[Spec.ScaleConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.ScaleConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecScaleConfigAdditionalPropertiesDecoder: Decoder[Spec.ScaleConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$29) => Spec.ScaleConfig.AdditionalProperties(x$29)))));
     implicit val SpecAxisConfigEncoder: Encoder[Spec.AxisConfig] = Encoder.instance(((cc: Spec.AxisConfig) => Json.obj("axisWidth".->(cc.axisWidth.asJson),
  "layer".->(cc.layer.asJson),
  "offset".->(cc.offset.asJson),
@@ -2212,7 +2487,8 @@ object Spec {
  "titleOffset".->(cc.titleOffset.asJson),
  "titleMaxLength".->(cc.titleMaxLength.asJson),
  "characterWidth".->(cc.characterWidth.asJson),
- "properties".->(cc.properties.asJson))));
+ "properties".->(cc.properties.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecAxisConfigDecoder: Decoder[Spec.AxisConfig] = Decoder.instance(((c: HCursor) => c.downField("axisWidth").as[Option[Double]]
 .flatMap(((axisWidth) => c.downField("layer").as[Option[String]]
 .flatMap(((layer) => c.downField("offset").as[Option[Double]]
@@ -2247,7 +2523,9 @@ object Spec {
 .flatMap(((titleFontWeight) => c.downField("titleOffset").as[Option[Double]]
 .flatMap(((titleOffset) => c.downField("titleMaxLength").as[Option[Double]]
 .flatMap(((titleMaxLength) => c.downField("characterWidth").as[Option[Double]]
-.flatMap(((characterWidth) => c.downField("properties").as[Option[AxisConfig.Properties]].map(((properties) => Spec.AxisConfig(axisWidth,
+.flatMap(((characterWidth) => c.downField("properties").as[Option[AxisConfig.Properties]]
+.flatMap(((properties) => c.downField("additionalProperties").as[Option[Map[String,
+ AxisConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.AxisConfig(axisWidth,
  layer,
  offset,
  axisColor,
@@ -2281,9 +2559,12 @@ object Spec {
  titleOffset,
  titleMaxLength,
  characterWidth,
- properties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+ properties,
+ additionalProperties)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
     implicit val SpecAxisConfigPropertiesEncoder: Encoder[Spec.AxisConfig.Properties] = Encoder.instance(((wrapper: Spec.AxisConfig.Properties) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecAxisConfigPropertiesDecoder: Decoder[Spec.AxisConfig.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$5) => Spec.AxisConfig.Properties(x$5)))));
+    implicit val SpecAxisConfigPropertiesDecoder: Decoder[Spec.AxisConfig.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$30) => Spec.AxisConfig.Properties(x$30)))));
+    implicit val SpecAxisConfigAdditionalPropertiesEncoder: Encoder[Spec.AxisConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.AxisConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecAxisConfigAdditionalPropertiesDecoder: Decoder[Spec.AxisConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$31) => Spec.AxisConfig.AdditionalProperties(x$31)))));
     implicit val SpecLegendConfigEncoder: Encoder[Spec.LegendConfig] = Encoder.instance(((cc: Spec.LegendConfig) => Json.obj("orient".->(cc.orient.asJson),
  "offset".->(cc.offset.asJson),
  "padding".->(cc.padding.asJson),
@@ -2307,7 +2588,8 @@ object Spec {
  "titleFont".->(cc.titleFont.asJson),
  "titleFontSize".->(cc.titleFontSize.asJson),
  "titleFontWeight".->(cc.titleFontWeight.asJson),
- "properties".->(cc.properties.asJson))));
+ "properties".->(cc.properties.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecLegendConfigDecoder: Decoder[Spec.LegendConfig] = Decoder.instance(((c: HCursor) => c.downField("orient").as[Option[String]]
 .flatMap(((orient) => c.downField("offset").as[Option[Double]]
 .flatMap(((offset) => c.downField("padding").as[Option[Double]]
@@ -2331,7 +2613,9 @@ object Spec {
 .flatMap(((titleColor) => c.downField("titleFont").as[Option[String]]
 .flatMap(((titleFont) => c.downField("titleFontSize").as[Option[Double]]
 .flatMap(((titleFontSize) => c.downField("titleFontWeight").as[Option[String]]
-.flatMap(((titleFontWeight) => c.downField("properties").as[Option[LegendConfig.Properties]].map(((properties) => Spec.LegendConfig(orient,
+.flatMap(((titleFontWeight) => c.downField("properties").as[Option[LegendConfig.Properties]]
+.flatMap(((properties) => c.downField("additionalProperties").as[Option[Map[String,
+ LegendConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.LegendConfig(orient,
  offset,
  padding,
  margin,
@@ -2354,63 +2638,96 @@ object Spec {
  titleFont,
  titleFontSize,
  titleFontWeight,
- properties)))))))))))))))))))))))))))))))))))))))))))))))))));
+ properties,
+ additionalProperties)))))))))))))))))))))))))))))))))))))))))))))))))))));
     implicit val SpecLegendConfigPropertiesEncoder: Encoder[Spec.LegendConfig.Properties] = Encoder.instance(((wrapper: Spec.LegendConfig.Properties) => wrapper.x.asJson(anyEncoder)));
-    implicit val SpecLegendConfigPropertiesDecoder: Decoder[Spec.LegendConfig.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$6) => Spec.LegendConfig.Properties(x$6)))));
+    implicit val SpecLegendConfigPropertiesDecoder: Decoder[Spec.LegendConfig.Properties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$32) => Spec.LegendConfig.Properties(x$32)))));
+    implicit val SpecLegendConfigAdditionalPropertiesEncoder: Encoder[Spec.LegendConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.LegendConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecLegendConfigAdditionalPropertiesDecoder: Decoder[Spec.LegendConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$33) => Spec.LegendConfig.AdditionalProperties(x$33)))));
     implicit val SpecFacetConfigEncoder: Encoder[Spec.FacetConfig] = Encoder.instance(((cc: Spec.FacetConfig) => Json.obj("scale".->(cc.scale.asJson),
  "axis".->(cc.axis.asJson),
  "grid".->(cc.grid.asJson),
- "cell".->(cc.cell.asJson))));
+ "cell".->(cc.cell.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFacetConfigDecoder: Decoder[Spec.FacetConfig] = Decoder.instance(((c: HCursor) => c.downField("scale").as[Option[FacetScaleConfig]]
 .flatMap(((scale) => c.downField("axis").as[Option[AxisConfig]]
 .flatMap(((axis) => c.downField("grid").as[Option[FacetGridConfig]]
-.flatMap(((grid) => c.downField("cell").as[Option[CellConfig]].map(((cell) => Spec.FacetConfig(scale,
+.flatMap(((grid) => c.downField("cell").as[Option[CellConfig]]
+.flatMap(((cell) => c.downField("additionalProperties").as[Option[Map[String,
+ FacetConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.FacetConfig(scale,
  axis,
  grid,
- cell)))))))))));
+ cell,
+ additionalProperties)))))))))))));
+    implicit val SpecFacetConfigAdditionalPropertiesEncoder: Encoder[Spec.FacetConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.FacetConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFacetConfigAdditionalPropertiesDecoder: Decoder[Spec.FacetConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$34) => Spec.FacetConfig.AdditionalProperties(x$34)))));
     implicit val SpecFacetScaleConfigEncoder: Encoder[Spec.FacetScaleConfig] = Encoder.instance(((cc: Spec.FacetScaleConfig) => Json.obj("round".->(cc.round.asJson),
- "padding".->(cc.padding.asJson))));
+ "padding".->(cc.padding.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFacetScaleConfigDecoder: Decoder[Spec.FacetScaleConfig] = Decoder.instance(((c: HCursor) => c.downField("round").as[Option[Boolean]]
-.flatMap(((round) => c.downField("padding").as[Option[Double]].map(((padding) => Spec.FacetScaleConfig(round,
- padding)))))));
+.flatMap(((round) => c.downField("padding").as[Option[Double]]
+.flatMap(((padding) => c.downField("additionalProperties").as[Option[Map[String,
+ FacetScaleConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.FacetScaleConfig(round,
+ padding,
+ additionalProperties)))))))));
+    implicit val SpecFacetScaleConfigAdditionalPropertiesEncoder: Encoder[Spec.FacetScaleConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.FacetScaleConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFacetScaleConfigAdditionalPropertiesDecoder: Decoder[Spec.FacetScaleConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$35) => Spec.FacetScaleConfig.AdditionalProperties(x$35)))));
     implicit val SpecFacetGridConfigEncoder: Encoder[Spec.FacetGridConfig] = Encoder.instance(((cc: Spec.FacetGridConfig) => Json.obj("color".->(cc.color.asJson),
  "opacity".->(cc.opacity.asJson),
- "offset".->(cc.offset.asJson))));
+ "offset".->(cc.offset.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFacetGridConfigDecoder: Decoder[Spec.FacetGridConfig] = Decoder.instance(((c: HCursor) => c.downField("color").as[Option[String]]
 .flatMap(((color) => c.downField("opacity").as[Option[Double]]
-.flatMap(((opacity) => c.downField("offset").as[Option[Double]].map(((offset) => Spec.FacetGridConfig(color,
+.flatMap(((opacity) => c.downField("offset").as[Option[Double]]
+.flatMap(((offset) => c.downField("additionalProperties").as[Option[Map[String,
+ FacetGridConfig.AdditionalProperties]]].map(((additionalProperties) => Spec.FacetGridConfig(color,
  opacity,
- offset)))))))));
+ offset,
+ additionalProperties)))))))))));
+    implicit val SpecFacetGridConfigAdditionalPropertiesEncoder: Encoder[Spec.FacetGridConfig.AdditionalProperties] = Encoder.instance(((wrapper: Spec.FacetGridConfig.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFacetGridConfigAdditionalPropertiesDecoder: Decoder[Spec.FacetGridConfig.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$36) => Spec.FacetGridConfig.AdditionalProperties(x$36)))));
     implicit val SpecFacetSpecEncoder: Encoder[Spec.FacetSpec] = Encoder.instance(((cc: Spec.FacetSpec) => Json.obj("facet".->(cc.facet.asJson),
  "spec".->(cc.spec.asJson),
  "name".->(cc.name.asJson),
  "description".->(cc.description.asJson),
  "data".->(cc.data.asJson),
  "transform".->(cc.transform.asJson),
- "config".->(cc.config.asJson))));
+ "config".->(cc.config.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFacetSpecDecoder: Decoder[Spec.FacetSpec] = Decoder.instance(((c: HCursor) => c.downField("facet").as[Facet]
 .flatMap(((facet) => c.downField("spec").as[FacetSpec.SpecUnion]
 .flatMap(((spec) => c.downField("name").as[Option[String]]
 .flatMap(((name) => c.downField("description").as[Option[String]]
 .flatMap(((description) => c.downField("data").as[Option[Data]]
 .flatMap(((data) => c.downField("transform").as[Option[Transform]]
-.flatMap(((transform) => c.downField("config").as[Option[Config]].map(((config) => Spec.FacetSpec(facet,
+.flatMap(((transform) => c.downField("config").as[Option[Config]]
+.flatMap(((config) => c.downField("additionalProperties").as[Option[Map[String,
+ FacetSpec.AdditionalProperties]]].map(((additionalProperties) => Spec.FacetSpec(facet,
  spec,
  name,
  description,
  data,
  transform,
- config)))))))))))))))));
+ config,
+ additionalProperties)))))))))))))))))));
     implicit val SpecFacetSpecSpecUnionEncoder: Encoder[Spec.FacetSpec.SpecUnion] = Encoder.instance({
       case (ut @ ((_): Spec.FacetSpec.SpecLayerSpec)) => ut.x.asJson
       case (ut @ ((_): Spec.FacetSpec.SpecUnitSpec)) => ut.x.asJson
     });
     implicit val SpecFacetSpecSpecUnionDecoder: Decoder[Spec.FacetSpec.SpecUnion] = Decoder.instance(((c: HCursor) => c.as[LayerSpec].map(((x) => Spec.FacetSpec.SpecLayerSpec(x))).orElse(c.as[UnitSpec].map(((x) => Spec.FacetSpec.SpecUnitSpec(x))))));
+    implicit val SpecFacetSpecAdditionalPropertiesEncoder: Encoder[Spec.FacetSpec.AdditionalProperties] = Encoder.instance(((wrapper: Spec.FacetSpec.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFacetSpecAdditionalPropertiesDecoder: Decoder[Spec.FacetSpec.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$37) => Spec.FacetSpec.AdditionalProperties(x$37)))));
     implicit val SpecFacetEncoder: Encoder[Spec.Facet] = Encoder.instance(((cc: Spec.Facet) => Json.obj("row".->(cc.row.asJson),
- "column".->(cc.column.asJson))));
+ "column".->(cc.column.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecFacetDecoder: Decoder[Spec.Facet] = Decoder.instance(((c: HCursor) => c.downField("row").as[Option[PositionChannelDef]]
-.flatMap(((row) => c.downField("column").as[Option[PositionChannelDef]].map(((column) => Spec.Facet(row,
- column)))))));
+.flatMap(((row) => c.downField("column").as[Option[PositionChannelDef]]
+.flatMap(((column) => c.downField("additionalProperties").as[Option[Map[String,
+ Facet.AdditionalProperties]]].map(((additionalProperties) => Spec.Facet(row,
+ column,
+ additionalProperties)))))))));
+    implicit val SpecFacetAdditionalPropertiesEncoder: Encoder[Spec.Facet.AdditionalProperties] = Encoder.instance(((wrapper: Spec.Facet.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecFacetAdditionalPropertiesDecoder: Decoder[Spec.Facet.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$38) => Spec.Facet.AdditionalProperties(x$38)))));
     implicit val SpecLayerSpecEncoder: Encoder[Spec.LayerSpec] = Encoder.instance(((cc: Spec.LayerSpec) => Json.obj("width".->(cc.width.asJson),
  "height".->(cc.height.asJson),
  "layers".->(cc.layers.asJson),
@@ -2418,7 +2735,8 @@ object Spec {
  "description".->(cc.description.asJson),
  "data".->(cc.data.asJson),
  "transform".->(cc.transform.asJson),
- "config".->(cc.config.asJson))));
+ "config".->(cc.config.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecLayerSpecDecoder: Decoder[Spec.LayerSpec] = Decoder.instance(((c: HCursor) => c.downField("width").as[Option[Double]]
 .flatMap(((width) => c.downField("height").as[Option[Double]]
 .flatMap(((height) => c.downField("layers").as[List[UnitSpec]]
@@ -2426,14 +2744,19 @@ object Spec {
 .flatMap(((name) => c.downField("description").as[Option[String]]
 .flatMap(((description) => c.downField("data").as[Option[Data]]
 .flatMap(((data) => c.downField("transform").as[Option[Transform]]
-.flatMap(((transform) => c.downField("config").as[Option[Config]].map(((config) => Spec.LayerSpec(width,
+.flatMap(((transform) => c.downField("config").as[Option[Config]]
+.flatMap(((config) => c.downField("additionalProperties").as[Option[Map[String,
+ LayerSpec.AdditionalProperties]]].map(((additionalProperties) => Spec.LayerSpec(width,
  height,
  layers,
  name,
  description,
  data,
  transform,
- config)))))))))))))))))));
+ config,
+ additionalProperties)))))))))))))))))))));
+    implicit val SpecLayerSpecAdditionalPropertiesEncoder: Encoder[Spec.LayerSpec.AdditionalProperties] = Encoder.instance(((wrapper: Spec.LayerSpec.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecLayerSpecAdditionalPropertiesDecoder: Decoder[Spec.LayerSpec.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$39) => Spec.LayerSpec.AdditionalProperties(x$39)))));
     implicit val SpecUnitSpecEncoder: Encoder[Spec.UnitSpec] = Encoder.instance(((cc: Spec.UnitSpec) => Json.obj("width".->(cc.width.asJson),
  "height".->(cc.height.asJson),
  "mark".->(cc.mark.asJson),
@@ -2442,7 +2765,8 @@ object Spec {
  "description".->(cc.description.asJson),
  "data".->(cc.data.asJson),
  "transform".->(cc.transform.asJson),
- "config".->(cc.config.asJson))));
+ "config".->(cc.config.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecUnitSpecDecoder: Decoder[Spec.UnitSpec] = Decoder.instance(((c: HCursor) => c.downField("width").as[Option[Double]]
 .flatMap(((width) => c.downField("height").as[Option[Double]]
 .flatMap(((height) => c.downField("mark").as[Mark]
@@ -2451,7 +2775,9 @@ object Spec {
 .flatMap(((name) => c.downField("description").as[Option[String]]
 .flatMap(((description) => c.downField("data").as[Option[Data]]
 .flatMap(((data) => c.downField("transform").as[Option[Transform]]
-.flatMap(((transform) => c.downField("config").as[Option[Config]].map(((config) => Spec.UnitSpec(width,
+.flatMap(((transform) => c.downField("config").as[Option[Config]]
+.flatMap(((config) => c.downField("additionalProperties").as[Option[Map[String,
+ UnitSpec.AdditionalProperties]]].map(((additionalProperties) => Spec.UnitSpec(width,
  height,
  mark,
  encoding,
@@ -2459,7 +2785,10 @@ object Spec {
  description,
  data,
  transform,
- config)))))))))))))))))))));
+ config,
+ additionalProperties)))))))))))))))))))))));
+    implicit val SpecUnitSpecAdditionalPropertiesEncoder: Encoder[Spec.UnitSpec.AdditionalProperties] = Encoder.instance(((wrapper: Spec.UnitSpec.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecUnitSpecAdditionalPropertiesDecoder: Decoder[Spec.UnitSpec.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$40) => Spec.UnitSpec.AdditionalProperties(x$40)))));
     implicit val SpecUnitEncodingEncoder: Encoder[Spec.UnitEncoding] = Encoder.instance(((cc: Spec.UnitEncoding) => Json.obj("x".->(cc.x.asJson),
  "y".->(cc.y.asJson),
  "x2".->(cc.x2.asJson),
@@ -2472,7 +2801,8 @@ object Spec {
  "text".->(cc.text.asJson),
  "label".->(cc.label.asJson),
  "path".->(cc.path.asJson),
- "order".->(cc.order.asJson))));
+ "order".->(cc.order.asJson),
+ "additionalProperties".->(cc.additionalProperties.asJson))));
     implicit val SpecUnitEncodingDecoder: Decoder[Spec.UnitEncoding] = Decoder.instance(((c: HCursor) => c.downField("x").as[Option[PositionChannelDef]]
 .flatMap(((x) => c.downField("y").as[Option[PositionChannelDef]]
 .flatMap(((y) => c.downField("x2").as[Option[FieldDef]]
@@ -2485,7 +2815,9 @@ object Spec {
 .flatMap(((detail) => c.downField("text").as[Option[FieldDef]]
 .flatMap(((text) => c.downField("label").as[Option[FieldDef]]
 .flatMap(((label) => c.downField("path").as[Option[UnitEncoding.PathUnion]]
-.flatMap(((path) => c.downField("order").as[Option[UnitEncoding.OrderUnion]].map(((order) => Spec.UnitEncoding(x,
+.flatMap(((path) => c.downField("order").as[Option[UnitEncoding.OrderUnion]]
+.flatMap(((order) => c.downField("additionalProperties").as[Option[Map[String,
+ UnitEncoding.AdditionalProperties]]].map(((additionalProperties) => Spec.UnitEncoding(x,
  y,
  x2,
  y2,
@@ -2497,7 +2829,8 @@ object Spec {
  text,
  label,
  path,
- order)))))))))))))))))))))))))))));
+ order,
+ additionalProperties)))))))))))))))))))))))))))))));
     implicit val SpecUnitEncodingDetailUnionEncoder: Encoder[Spec.UnitEncoding.DetailUnion] = Encoder.instance({
       case (ut @ ((_): Spec.UnitEncoding.DetailFieldDef)) => ut.x.asJson
       case (ut @ ((_): Spec.UnitEncoding.DetailListFieldDef)) => ut.x.asJson
@@ -2513,6 +2846,8 @@ object Spec {
       case (ut @ ((_): Spec.UnitEncoding.OrderListOrderChannelDef)) => ut.x.asJson
     });
     implicit val SpecUnitEncodingOrderUnionDecoder: Decoder[Spec.UnitEncoding.OrderUnion] = Decoder.instance(((c: HCursor) => c.as[OrderChannelDef].map(((x) => Spec.UnitEncoding.OrderOrderChannelDef(x))).orElse(c.as[List[OrderChannelDef]].map(((x) => Spec.UnitEncoding.OrderListOrderChannelDef(x))))));
+    implicit val SpecUnitEncodingAdditionalPropertiesEncoder: Encoder[Spec.UnitEncoding.AdditionalProperties] = Encoder.instance(((wrapper: Spec.UnitEncoding.AdditionalProperties) => wrapper.x.asJson(anyEncoder)));
+    implicit val SpecUnitEncodingAdditionalPropertiesDecoder: Decoder[Spec.UnitEncoding.AdditionalProperties] = Decoder.instance(((h: HCursor) => h.as[Any](anyDecoder).map(((x$41) => Spec.UnitEncoding.AdditionalProperties(x$41)))));
     implicit val SpecVegaUnionEncoder: Encoder[Spec.VegaUnion] = Encoder.instance({
       case (ut @ ((_): Spec.VegaExtendedUnitSpec)) => ut.x.asJson
       case (ut @ ((_): Spec.VegaFacetSpec)) => ut.x.asJson
